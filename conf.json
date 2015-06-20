@@ -1,0 +1,30 @@
+{
+  "db":{
+    "path":"postgresql://postgres:123@192.168.110.130/test_gis_django",
+    "path":"sqlite:///test.db",
+    "echo":false
+  },
+  "generator":[
+    {
+      "language":"python",
+      "name":"sqlalchemy",
+      "file":"model.py",
+      "tabulation":"    ",
+      "separator":"\n"
+    },
+    {
+      "language":"python",
+      "name":"django",
+      "file":"models.py",
+      "tabulation":"    ",
+      "separator":"\n"
+    },
+    {
+      "language":"java",
+      "name":"hibernate",
+      "file":"com.test",
+      "tabulation":"\t",
+      "separator":"\n"
+    }
+  ]
+}
