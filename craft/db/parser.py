@@ -11,18 +11,30 @@ from craft import broker
 class DBParser(object):
 
     def parsetables(self, metadata):
-        tables = metadata.tables
-        out = []
-        for key in tables:
+        meta = metadata.tables
+        tables = []
+        for key in meta:
             sqltable = broker.Table(key)
-            table = tables[key]
+            table = meta[key]
             columns = []
             for one in table.columns:
                 data = self.resolve_column(one, key)
                 columns.append(data)
             sqltable.columns = columns
-            out.append(sqltable)
-        return out
+            tables.append(sqltable)
+        deps = self.resolve_dependencies(tables)
+        return broker.Structure(tables, deps)
+
+    def resolve_dependencies(self, tables):
+        deps = {}
+        for one in tables:
+            for col in one.columns:
+                key = col.foreignkey
+                if key:
+                    if not deps.has_key(key.table):
+                        deps[key.table] = []
+                    deps[key.table].append(one.name)
+        return deps
 
     def resolve_column(self, column, table):
         out = broker.Column(name=column.name, autoincrement=column.autoincrement, primary=column.primary_key,
@@ -35,9 +47,11 @@ class DBParser(object):
             # match foreign key
         if len(column.foreign_keys) > 0:
             for foreign in column.foreign_keys:
-                if foreign.parent.table.name == table:
-                    out.foreignkey = broker.ForeignKey(name=foreign.name, fullname=foreign.target_fullname)
-                    break
+                col = foreign.column
+                out.foreignkey = broker.ForeignKey(table=col.table.name,
+                                                   column=col.description,
+                                                   name=foreign.target_fullname)
+                break
         return out
 
     def resolve_type(self, type):

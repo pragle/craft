@@ -19,8 +19,8 @@ class Generator():
         elif self.conf.name == 'hibernate':
             self.generator = HibernateGenerator()
 
-    def generate(self, tables):
+    def generate(self, structure):
         if self.generator is not None:
-            self.generator.generate(tables=tables, conf=self.conf)
+            self.generator.generate(structure=structure, conf=self.conf)
         else:
             print('no such generator')

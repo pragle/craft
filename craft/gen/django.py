@@ -8,14 +8,14 @@ from craft import util
 
 class DjangoGenerator():
 
-    def generate(self, tables, conf):
+    def generate(self, structure, conf):
         SEP = GenConfig.SEP
         code = open(conf.file, 'w+')
         out = ''
         out += self.header()
         out += 'from django.db import models'+SEP
         out += SEP
-        for one in tables:
+        for one in structure:
             out += Table(one).get()
             out += SEP
         out = out[:len(out)-1]

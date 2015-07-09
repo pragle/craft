@@ -10,12 +10,12 @@ from craft import util
 
 class HibernateGenerator():
 
-    def generate(self, tables, conf):
+    def generate(self, structure, conf):
         dir = os.sep.join(conf.file.split('.'))
         if os.path.exists(dir):
            shutil.rmtree(dir)
         os.makedirs(dir)
-        for one in tables:
+        for one in structure.tables:
             clazz = util.name_to_camelcase(one.name, '_')
             with open(dir+os.sep+clazz+'.java', 'w+') as f:
                 out = ''

@@ -3,6 +3,11 @@
 __author__ = 'Michal Szczepanski'
 
 
+class Structure():
+    def __init__(self, tables, deps):
+        self.tables = tables
+        self.deps = deps
+
 class Table():
     def __init__(self, name):
         self.name = name
@@ -22,9 +27,10 @@ class Column():
 
 
 class ForeignKey():
-    def __init__(self, name, fullname):
+    def __init__(self, table, column, name):
+        self.table = table
+        self.column = column
         self.name = name
-        self.fullname = fullname
 
 
 class Type():

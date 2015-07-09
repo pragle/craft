@@ -10,12 +10,12 @@ Generates SQLAlchemyCode in pep8 compatibile format
 '''
 class SQLAlchemyGenerator(object):
 
-    def generate(self, tables, conf):
+    def generate(self, structure, conf):
         code = open(conf.file, 'w+')
         out = ''
         out += self.header()
-        out += self.resolve_import(tables)
-        for one in tables:
+        out += self.resolve_import(structure.tables)
+        for one in structure.tables:
             out += Table(one).get()
             out += GenConfig.SEP
         out = out[:len(out)-1]
@@ -80,12 +80,12 @@ class Column(broker.Column):
         out += self.name
         out += ' = Column('
         out += Type(self.type).get()
+        if self.foreignkey is not None:
+            out += ', ForeignKey(\''+ForeignKey(self.foreignkey).get()+'\')'
         if self.primary:
             if self.sequence_name:
                 out += ', Sequence(\''+self.sequence_name+'\')'
             out += ', primary_key=True'
-        if self.foreignkey is not None:
-            out += ', ForeignKey(\''+ForeignKey(self.foreignkey).get()+'\')'
         if not self.nullable:
             out += ', nullable=True'
         if self.unique:
@@ -99,7 +99,7 @@ class ForeignKey(broker.ForeignKey):
         self.__dict__ = parent.__dict__
 
     def get(self):
-        return self.fullname
+        return self.name
 
 class Type(broker.Type):
 

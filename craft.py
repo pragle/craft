@@ -12,10 +12,10 @@ def start():
     data = Config.parse('conf.json')
     db = DBConnector(conf=data['db'])
     parser = DBParser()
-    tables = parser.parsetables(db.get_metadata())
+    structure = parser.parsetables(db.get_metadata())
     for one in data['generator']:
         generator = Generator(one)
-        generator.generate(tables=tables)
+        generator.generate(structure=structure)
 
 if __name__ == '__main__':
     start()
