@@ -12,7 +12,7 @@ def start():
     data = Config.parse('conf.json')
     db = DBConnector(conf=data['db'])
     parser = DBParser()
-    structure = parser.parsetables(db.get_metadata())
+    structure = parser.parsetables(db.get_metadata(), db.dbversion)
     for one in data['generator']:
         generator = Generator(one)
         generator.generate(structure=structure)

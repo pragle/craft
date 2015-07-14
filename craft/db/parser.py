@@ -3,14 +3,15 @@
 __author__ = 'Michal Szczepanski'
 
 from sqlalchemy.sql import sqltypes as typesql
-from sqlalchemy.dialects import postgres as typepsql
 
 from craft import broker
+from craft.db.sql import postgres, mysql
 
 
 class DBParser(object):
 
-    def parsetables(self, metadata):
+    def parsetables(self, metadata, dbversion):
+        self.dbversion = dbversion
         meta = metadata.tables
         tables = []
         for key in meta:
@@ -31,9 +32,9 @@ class DBParser(object):
             for col in one.columns:
                 key = col.foreignkey
                 if key:
-                    if not deps.has_key(key.table):
-                        deps[key.table] = []
-                    deps[key.table].append(one.name)
+                    if not deps.has_key(one.name):
+                        deps[one.name] = []
+                    deps[one.name].append(key.table)
         return deps
 
     def resolve_column(self, column, table):
@@ -67,10 +68,11 @@ class DBParser(object):
         elif name == typesql.NullType:
             out.parsed = False
         # psql specific
-        elif name == typepsql.DOUBLE_PRECISION.__name__:
+        elif name in postgres.types and self.dbversion is 'postgresql':
             out.version = 'psql'
-            if type.precision is not None:
-                out.precision = type.precision
-        elif name == typepsql.SMALLINT:
-            out.version = 'psql'
+            if name == postgres.postgresql.DOUBLE_PRECISION.__name__:
+                if type.precision is not None:
+                    out.precision = type.precision
+        elif name in mysql.types and self.dbversion is 'mysql':
+            out.version = 'mysql'
         return out

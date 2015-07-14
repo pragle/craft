@@ -2,9 +2,9 @@
 # -*- codding: utf-8 -*--
 __author__ = 'Michal Szczepanski'
 
-from craft.gen.sqlalchemy import SQLAlchemyGenerator
-from craft.gen.hibernate import HibernateGenerator
-from craft.gen.django import DjangoGenerator
+from craft.gen.sqldb.sqlalchemy import SQLAlchemyGenerator
+from craft.gen.sqldb.hibernate import HibernateGenerator
+from craft.gen.sqldb.django import DjangoGenerator
 from craft.conf import GenConfig
 
 

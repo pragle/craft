@@ -16,7 +16,7 @@ class SQLAlchemyGenerator(object):
         out += self.header()
         out += self.resolve_import(structure.tables)
         for one in structure.tables:
-            out += Table(one).get()
+            out += Table(one).get(structure.deps)
             out += GenConfig.SEP
         out = out[:len(out)-1]
         code.write(out)
@@ -43,6 +43,7 @@ class SQLAlchemyGenerator(object):
         out = ''
         out += 'from sqlalchemy.sql.schema import Column, ForeignKey, Sequence'+SEP
         out += 'from sqlalchemy.ext.declarative import declarative_base'+SEP
+        out += 'from sqlalchemy.orm import relationship'+SEP
         for one in imp:
             out+= one+SEP
         out += SEP
@@ -57,7 +58,7 @@ class Table(broker.Table):
     def __init__(self, parent):
         self.__dict__ = parent.__dict__
 
-    def get(self):
+    def get(self, deps):
         SEP = GenConfig.SEP
         TAB = GenConfig.TAB
         out = ''+SEP
@@ -65,8 +66,18 @@ class Table(broker.Table):
         out += 'class '+clazz+'(Base):'+SEP
         out += TAB+'__tablename__ = \''+self.name+'\''+SEP
         out += TAB+SEP
+
         for one in self.columns:
             out += TAB+Column(one).get()+SEP
+
+        if deps.has_key(self.name):
+            dependencies = deps.get(self.name)
+            for one in dependencies:
+                out += SEP
+                out += TAB
+                name = util.name_to_camelcase(one, '_')
+                out += one+' = relationship(\''+name+'\', lazy=\'subquery\')'
+                out += SEP
         return out
 
 
@@ -113,4 +124,6 @@ class Type(broker.Type):
         if self.version == 'sql':
             return 'from sqlalchemy.types import '+self.name
         elif self.version == 'psql':
-            return 'from sqlalchemy.dialects.postgres import '+self.name
+            return 'from sqlalchemy.dialects.postgresql import '+self.name
+        elif self.version == 'mysql':
+            return 'from sqlalchemy.dialects.mysql import '+self.name
