@@ -1,7 +1,8 @@
 {
   "db":{
-    "path":"postgresql://postgres:123@192.168.110.130/test_gis_django",
     "path":"sqlite:///test.db",
+    "path":"postgresql://postgres:123@192.168.110.141/test_db",
+    "path":"mysql+pymysql://wordpress:password@192.168.110.102/wordpress",
     "echo":false
   },
   "generator":[
@@ -10,20 +11,6 @@
       "name":"sqlalchemy",
       "file":"model.py",
       "tabulation":"    ",
-      "separator":"\n"
-    },
-    {
-      "language":"python",
-      "name":"django",
-      "file":"models.py",
-      "tabulation":"    ",
-      "separator":"\n"
-    },
-    {
-      "language":"java",
-      "name":"hibernate",
-      "file":"com.test",
-      "tabulation":"\t",
       "separator":"\n"
     }
   ]

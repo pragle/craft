@@ -1,5 +1,5 @@
-#!/usr/bin/python
-# -*- codding: utf-8 -*--
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
 from sqlalchemy import create_engine, MetaData

@@ -1,5 +1,5 @@
-#!/usr/bin/python
-# -*- codding: utf-8 -*--
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
 from craft.conf import GenConfig
@@ -23,8 +23,8 @@ class DjangoGenerator():
 
     def header(self):
         SEP = GenConfig.SEP
-        out = '#!/usr/bin/python'+SEP
-        out += '# -*- codding: utf-8 -*--'+SEP
+        out = '#!/usr/bin/env python'+SEP
+        out += '# -*- coding: utf-8 -*-'+SEP
         out += '"""'+SEP
         out += 'THIS CODE WAS GENERATED AUTOMATICALY'+SEP
         out += 'MODIFICATIONS AT YOUR OWN RISK !!!'+SEP

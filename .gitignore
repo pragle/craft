@@ -1,0 +1,4 @@
+*.pyc
+*.imls
+*.dbs
+web/html/static/ext

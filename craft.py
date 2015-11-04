@@ -1,14 +1,16 @@
-#!/usr/bin/python
-# -*- codding: utf-8 -*--
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
 from craft.db.parser import DBParser
 from craft.db.connector import DBConnector
 from craft.generator import Generator
 from craft.conf import Config
+from web import server
 
 
 def start():
+    '''
     data = Config.parse('conf.json')
     db = DBConnector(conf=data['db'])
     parser = DBParser()
@@ -16,6 +18,11 @@ def start():
     for one in data['generator']:
         generator = Generator(one)
         generator.generate(structure=structure)
+    '''
+    sf = 'html/static'
+    tf = 'html/templates'
+    web = server.WebApp(host='127.0.0.1', port=7070, debug=True, static_folder=sf, template_folder=tf)
+
 
 if __name__ == '__main__':
     start()
