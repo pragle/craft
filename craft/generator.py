@@ -5,7 +5,7 @@ __author__ = 'Michal Szczepanski'
 from craft.gen.sqldb.sqlalchemy import SQLAlchemyGenerator
 from craft.gen.sqldb.hibernate import HibernateGenerator
 from craft.gen.sqldb.django import DjangoGenerator
-from craft.conf import GenConfig
+from utils.conf import GenConfig
 
 
 class Generator():

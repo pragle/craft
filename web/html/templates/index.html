@@ -15,13 +15,65 @@
     <title></title>
 </head>
 <body>
-    <div>
-        <h2>Database Configuration : </h2>
-        <div>
-            <span>Type : </span>
-            <div></div>
+    <div id="main">
+        <div id="db_config">
+            <h2>Database Configuration : </h2>
+            <div id="db_config_type">
+                <span>Type : </span>
+                <select>
+                    <option>drizzle</option>
+                    <option>firebird</option>
+                    <option>mssql</option>
+                    <option>mysql</option>
+                    <option>oracle</option>
+                    <option>postgres</option>
+                    <option selected>sqlite</option>
+                    <option>sybase</option>
+                </select>
+            </div>
+            <div id="db_config_connect">
+                <span>Host : </span>
+                <input type="text" value="127.0.0.1" />
+                <span>Port : </span>
+                <input type="text" value="" />
+            </div>
+            <div>
+                <input type="button" value="Test Connection"/>
+            </div>
         </div>
-        <input type="text" />
+        <div id="gen_config">
+            <h2>Generator Configuration : </h2>
+            <div>
+                <span>Language : </span>
+                <select>
+                    <option>Java</option>
+                    <option selected>Python</option>
+                </select>
+            </div>
+            <div>
+                <span>Framework : </span>
+                <select>
+                    <option>Django</option>
+                    <option>Hibernate</option>
+                    <option>SQLAlchemy</option>
+                </select>
+            </div>
+            <div>
+                <h2>Code style : </h2>
+                <br />
+                <span>Tabulation : </span>
+                <input type="text" value="    " />
+                <span>Line separator : </span>
+                <select>
+                    <option>Unix / OS X (\n)</option>
+                    <option>Classic Mac (\r)</option>
+                    <option>Windows (\r\n)</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <input type="button" value="Generate" />
+        </div>
     </div>
 </body>
 </html>

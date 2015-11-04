@@ -2,10 +2,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
-from craft.db.parser import DBParser
-from craft.db.connector import DBConnector
-from craft.generator import Generator
-from craft.conf import Config
 from web import server
 
 

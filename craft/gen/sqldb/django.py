@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
-from craft.conf import GenConfig
+from utils.conf import GenConfig
 from craft import broker
 from craft import util
 

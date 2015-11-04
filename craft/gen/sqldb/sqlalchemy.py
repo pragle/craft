@@ -3,7 +3,7 @@
 __author__ = 'Michal Szczepanski'
 
 from craft import broker, util
-from craft.conf import GenConfig
+from utils.conf import GenConfig
 
 '''
 Generates SQLAlchemyCode in pep8 compatibile format

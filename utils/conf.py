@@ -5,12 +5,12 @@ __author__ = 'Michal Szczepanski'
 import json
 
 
-class GenType(object):
+class GenType:
     SQL = 'sql'
     PSQL = 'psql'
 
 
-class GenConfig():
+class GenConfig:
 
     SEP = '\n'
     TAB = '\t'

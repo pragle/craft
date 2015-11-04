@@ -4,9 +4,11 @@ __author__ = 'Michal Szczepanski'
 
 import os
 import shutil
-from craft.conf import GenConfig
+
+from utils.conf import GenConfig
 from craft import broker
 from craft import util
+
 
 class HibernateGenerator():
 

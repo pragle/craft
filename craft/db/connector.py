@@ -5,20 +5,13 @@ __author__ = 'Michal Szczepanski'
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 
+from craft import constraints
 
-class DBConnector():
 
-    sqldb = [
-        'drizzle',
-        'firebird',
-        'mssql',
-        'mysql',
-        'oracle',
-        'postgresql',
-        'sqlite',
-        'sybase'
-    ]
-
+class DBConnector:
+    """DBConnector
+    connects to the databse based on version you provided
+    """
     def __init__(self, conf):
         self._engine = create_engine(conf['path'], echo=conf['echo'])
         self._maker = sessionmaker(bind=self._engine, autocommit=False)
@@ -34,7 +27,7 @@ class DBConnector():
         return meta
 
     def _resolve_version(self, path):
-        for one in self.sqldb:
+        for one in constraints.SQL_DB_TYPES:
             if path.startswith(one):
                 self.dbversion = one
                 break
