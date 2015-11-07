@@ -5,7 +5,7 @@ __author__ = 'Michal Szczepanski'
 
 
 from craft import constraints
-from flask import json
+from flask import json, request
 
 
 class Data:
@@ -18,3 +18,7 @@ class Data:
             'framework': constraints.FRAMEWORKS
         }
         return json.dumps({'code': 0, 'msg': '', 'data': data})
+
+    def connection_test(self):
+        data = json.loads(request.data)
+        return json.dumps({'code': 0, 'msg': 'Connection ok', 'data': None})

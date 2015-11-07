@@ -20,6 +20,15 @@
     <div ng-app="craftApp">
         <div class="container-fluid top-20" ng-controller="MainCtrl as main">
             <div class="row">
+                <div ng-repeat="one in main.data.flash.messages"
+                     class="col-md6 alert alert-{{one.type}} alert-dismissible fade-in flash-{{one.id}}" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong ng-bind="one.message"></strong>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-10">
                     <ul class="nav nav-tabs">
                         <li role="presentation"
@@ -45,5 +54,6 @@
     <script type="text/javascript" src="/static/ext/angular-ui-router/0.2.15/angular-ui-router.js"></script>
     <script type="text/javascript" src="/static/app/js/app.js"></script>
     <script type="text/javascript" src="/static/app/js/mainModule.js"></script>
+    <script type="text/javascript" src="/static/app/js/configModule.js"></script>
 </body>
 </html>

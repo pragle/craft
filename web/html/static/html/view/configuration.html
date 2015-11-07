@@ -1,27 +1,23 @@
 <div>
+    <div>{{main.data.data}}}</div>
+    <div>{{conf.siema}}</div>
+    <div>{{main.data.connectionTest}}</div>
     <div id="db_config">
         <h2>Database Configuration : </h2>
         <div id="db_config_type">
             <span>Type : </span>
-            <select>
-                <option>drizzle</option>
-                <option>firebird</option>
-                <option>mssql</option>
-                <option>mysql</option>
-                <option>oracle</option>
-                <option>postgres</option>
-                <option selected>sqlite</option>
-                <option>sybase</option>
+            <select ng-model="main.data.db" ng-options="one.name for one in main.data.data.db track by one.name">
             </select>
         </div>
         <div id="db_config_connect">
             <span>Host : </span>
-            <input type="text" value="127.0.0.1" />
+            <input type="text" ng-model="main.data.db.host" />
             <span>Port : </span>
-            <input type="text" value="" />
+            <input type="text" ng-model="main.data.db.port" />
         </div>
         <div>
-            <input type="button" value="Test Connection"/>
+            <button ng-click="conf.flashTest()">Flash Test</button>
+            <input type="button" value="Test Connection" ng-click="conf.testConnectionClick()" />
         </div>
     </div>
     <div id="gen_config">

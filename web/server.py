@@ -5,7 +5,7 @@ __author__ = 'Michal Szczepanski'
 import logging
 from flask import Flask, request
 from utils import dependencies
-from web.view import html, data
+from web import router
 
 logger = logging.getLogger()
 
@@ -26,13 +26,7 @@ class WebApp:
                          static_folder=static_folder,
                          template_folder=template_folder)
 
-        self.html = html.HTML(self.app)
-        self.data = data.Data(self.app)
-
-        self.prefix = ''
-
-        self.app.add_url_rule(self.prefix+'/', 'index', self.html.index)
-        self.app.add_url_rule(self.prefix+'/data', 'data', self.data.initial_data)
+        router.RulesRouter(self.app).configure()
 
         logger.info('craft-server-start')
         self.app.run(host=host, port=port, debug=debug, use_reloader=True)
