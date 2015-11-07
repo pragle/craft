@@ -1,7 +1,7 @@
 {
   "www":{
     "host":"127.0.0.1",
-    "port":7070,
+    "port":7171,
     "debug":true,
     "static_folder":"html/static",
     "template_folder":"html/templates",
