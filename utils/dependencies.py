@@ -1,21 +1,23 @@
 #!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
 import urllib2
 import os
 import json
-import hashlib
+import logging
+
+logger = logging.getLogger()
 
 
 def get_file(url, out):
     u = urllib2.urlopen(url)
     f = open(out, 'wb')
     while True:
-        buffer = u.read(4096)
-        if not buffer:
+        buf = u.read(4096)
+        if not buf:
             break
-        f.write(buffer)
+        f.write(buf)
     f.close()
 
 
@@ -36,7 +38,7 @@ def download_libs(path, data):
         dst = path+'/'+lib['name']+'/'+src['version']
         for f in src['files']:
             url = src['url']+'/'+src['version']+'/'+f
-            a = f.split('/')[:1]
+            a = f.split('/')
             if len(a) > 1:
                 sub = '/'.join(a[:1])
             else:
@@ -44,10 +46,10 @@ def download_libs(path, data):
             out = dst+'/'+f
             dir_exist(dst+'/'+sub)
             if not file_exist(out):
-                print('file : %s , url : %s' % (out, url))
+                logger.debug('downloading file : %s , url : %s' % (out, url))
                 get_file(url, out)
             else:
-                print('skip : %s' % url)
+                logger.info('skipping file : %s' % url)
 
 
 def download(path, f):

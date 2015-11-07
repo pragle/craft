@@ -11,6 +11,39 @@
     }
   },
   {
+    "name":"angular-ui-router",
+    "src":
+    {
+      "version":"0.2.15",
+      "url":"https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/",
+      "files":[
+        "angular-ui-router.js"
+      ]
+    }
+  },
+  {
+    "name":"jquery",
+    "src":
+    {
+      "version":"1.11.3",
+      "url":"https://cdnjs.cloudflare.com/ajax/libs/jquery/",
+      "files":[
+        "jquery.js"
+      ]
+    }
+  },
+  {
+    "name":"jqueryui",
+    "src":
+    {
+      "version":"1.11.4",
+      "url":"https://cdnjs.cloudflare.com/ajax/libs/jqueryui/",
+      "files":[
+        "jquery-ui.js"
+      ]
+    }
+  },
+  {
     "name":"bootstrap",
     "src":
       {

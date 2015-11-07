@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
+import logging
 from craft.gen.sqldb.sqlalchemy import SQLAlchemyGenerator
 from craft.gen.sqldb.hibernate import HibernateGenerator
 from craft.gen.sqldb.django import DjangoGenerator
 from utils.conf import GenConfig
+
+logger = logging.getLogger()
 
 
 class Generator():
@@ -23,4 +26,4 @@ class Generator():
         if self.generator is not None:
             self.generator.generate(structure=structure, conf=self.conf)
         else:
-            print('no such generator')
+            logger.warn('no such generator')

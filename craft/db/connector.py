@@ -28,6 +28,6 @@ class DBConnector:
 
     def _resolve_version(self, path):
         for one in constraints.SQL_DB_TYPES:
-            if path.startswith(one):
-                self.dbversion = one
+            if path.startswith(one['name']):
+                self.dbversion = one['name']
                 break

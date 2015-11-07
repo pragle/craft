@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
+import logging
+import logging.config
 from web import server
+from flask import json
 
 
 def start():
@@ -15,10 +18,16 @@ def start():
         generator = Generator(one)
         generator.generate(structure=structure)
     '''
-    sf = 'html/static'
-    tf = 'html/templates'
-    web = server.WebApp(host='127.0.0.1', port=7070, debug=True, static_folder=sf, template_folder=tf)
+    # load logging configuration
+    logging.config.fileConfig('conf/logging.ini')
+    # load server configuration
+    conf = json.load(open('conf/www.json'))
+    www = conf['www']
+    # start web server
+    web = server.WebApp(www)
+    web.start()
 
 
 if __name__ == '__main__':
+
     start()
