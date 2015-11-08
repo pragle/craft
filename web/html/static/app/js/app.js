@@ -48,7 +48,7 @@ craftApp.factory('RemoteCall', ['$http', 'AppModel', function ($http, AppModel) 
                 method: 'GET'
             }).success(function(data){
                 if(checkValid(data)) {
-                    AppModel.data = data.data;
+                    AppModel.dbconf = data.data;
                     var db = data.data.db;
                     for(var i =0;i<db.length;i++) {
                         // DEFAULT DATABASE SET HERE
@@ -57,16 +57,45 @@ craftApp.factory('RemoteCall', ['$http', 'AppModel', function ($http, AppModel) 
                             break;
                         }
                     }
+                    // assign framework
+                    var fram = data.data.framework;
+                    for(var i =0;i<fram.length;i++) {
+                        if(fram[i].language == 'python') {
+                            AppModel.framework = fram[i];
+                            AppModel.frameworkSelected = fram[i].framework[0];
+                            AppModel.tabulation = fram[i].tabulation;
+                            break;
+                        }
+                    }
+                    AppModel.separator = data.data.separator[0];
                 }
             });
         },
         testConnection: function() {
             $http({
-                url: '/connection/test',
+                url: '/db/test',
                 method: 'POST',
-                data:AppModel.db
+                data: AppModel.db
             }).success(function(data) {
                 checkValid(data);
+            });
+        },
+        generateCode: function() {
+            out = {
+                language:AppModel.framework.language,
+                framework:AppModel.frameworkSelected,
+                tabulation:AppModel.tabulation,
+                db:AppModel.db,
+                separator:AppModel.separator,
+            }
+            $http({
+                url: '/code/generate',
+                method: 'POST',
+                data: out
+            }).success(function(data) {
+                if(checkValid(data)) {
+                    console.log(data.data);
+                }
             });
         }
     }

@@ -1,3 +1,20 @@
-.top-20 {
+
+.all-20 {
     margin:20px;
+}
+
+.top-20 {
+    margin-top:20px;
+}
+
+.left-20 {
+    margin-left: 20px;
+}
+
+.left-10 {
+    margin-left: 10px;
+}
+
+.right-10 {
+    margin-right: 10px;
 }

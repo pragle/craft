@@ -1,48 +1,74 @@
 <div>
-    <div id="db_config">
+    <div>{{main.data.dbconf}}</div>
+    <div class="all-20">
         <h2>Database Connection : </h2>
-        <div id="db_config_type">
-            <span>Type : </span>
-            <select ng-model="main.data.db" ng-options="one.name for one in main.data.data.db track by one.name">
-            </select>
+        <div class="row">
+            <div class="col-md-3">
+                <span>Type : </span>
+                <select class="form-control"
+                        ng-model="main.data.db"
+                        ng-options="one.name for one in main.data.dbconf.db track by one.name">
+                </select>
+            </div>
         </div>
-        <div id="db_config_connect">
-            <span>Host : </span>
-            <input type="text" ng-model="main.data.db.host" />
-            <span>Port : </span>
-            <input type="text" ng-model="main.data.db.port" />
-            <input type="button" value="Test Connection" ng-click="conf.testConnectionClick()" />
+        <div class="row top-20">
+            <div class="col-md-3">
+                <span>Host : </span>
+                <input type="text" class="form-control" ng-model="main.data.db.host" />
+            </div>
+            <div class="col-md-3">
+                <span>Port : </span>
+                <input type="text" class="form-control" ng-model="main.data.db.port" />
+            </div>
+            <br />
+        </div>
+        <div class="row top-20">
+            <div class="col-md-3">
+                <input type="button" class="btn btn-default" value="Test Connection"
+                       ng-click="conf.testConnectionClick()" />
+            </div>
         </div>
     </div>
-    <div id="gen_config">
+    <div class="all-20">
         <h2>Generator Configuration : </h2>
-        <div>
-            <span>Language : </span>
-            <select>
-                <option>Java</option>
-                <option selected>Python</option>
-            </select>
+        <div class="row">
+            <div class="col-md-3">
+                <span>Language : </span>
+                <select class="form-control"
+                        ng-model="main.data.framework"
+                        ng-change="conf.frameworkSelectedChange()"
+                        ng-options="one.language for one in main.data.dbconf.framework track by one.language">
+                </select>
+            </div>
+            <div class="col-md-3">
+                <span>Framework : </span>
+                <select class="form-control"
+                        ng-model="main.data.frameworkSelected"
+                        ng-options="one.name for one in main.data.framework.framework track by one.name">
+                </select>
+            </div>
         </div>
-        <div>
-            <span>Framework : </span>
-            <select>
-                <option>Django</option>
-                <option>Hibernate</option>
-                <option>SQLAlchemy</option>
-            </select>
+        <div class="row top-20">
+            <div class="col-md-3">
+                <span>Line separator : </span>
+                <select class="form-control"
+                        ng-model="main.data.separator"
+                        ng-options="one.name for one in main.data.dbconf.separator track by one.name">
+                    <!--<option ng-repeat="one in main.data.dbconf.separator">
+                        {{one.name}} ( {{one.sep}} )
+                    </option>-->
+                </select>
+            </div>
+            <div class="col-md-3">
+                <span>Tabulation : </span>
+                <input type="text" class="form-control" ng-model="main.data.tabulation"/>
+            </div>
         </div>
-        <div>
-            <h2>Code style : </h2>
-            <br />
-            <span>Tabulation : </span>
-            <input type="text" value="    " />
-            <span>Line separator : </span>
-            <select>
-                <option ng-repeat="one in main.data.data.separator">
-                    {{one.name}}
-                </option>
-            </select>
-            <input type="button" value="Generate" />
+        <div class="row">
+            <div class="col-md-3 top-20">
+                <input type="button" value="Generate" class="btn btn-default"
+                       ng-click="conf.generateClick()" />
+            </div>
         </div>
     </div>
 </div>

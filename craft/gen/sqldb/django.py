@@ -15,7 +15,7 @@ class DjangoGenerator():
         out += self.header()
         out += 'from django.db import models'+SEP
         out += SEP
-        for one in structure:
+        for one in structure.tables:
             out += Table(one).get()
             out += SEP
         out = out[:len(out)-1]

@@ -18,5 +18,14 @@
             conf.testConnectionClick = function() {
                 RemoteCall.testConnection();
             }
+
+            conf.frameworkSelectedChange = function() {
+                AppModel.frameworkSelected = AppModel.framework.framework[0];
+                AppModel.tabulation = AppModel.framework.tabulation;
+            }
+
+            conf.generateClick = function() {
+                RemoteCall.generateCode();
+            }
         }]);
 })();

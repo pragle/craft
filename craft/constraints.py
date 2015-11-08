@@ -45,23 +45,45 @@ SQL_DB_TYPES = [
     },
 ]
 
-FRAMEWORKS = {
-    'python': ['Django', 'SQLAlchemy'],
-    'java': ['Hibernate'],
-}
+FRAMEWORKS = [
+    {
+        'language': 'python',
+        'framework': [
+            {
+                'name':'django',
+                'file':'models.py'
+            },
+            {
+                'name':'SQLAlchemy',
+                'file':'model.py'
+            },
+        ],
+        'tabulation': '    ',
+    },
+    {
+        'language': 'java',
+        'framework': [
+            {
+                'name':'Hibernate',
+                'file':'com.test'
+            }
+        ],
+        'tabulation': '\\t'
+    },
+]
 
 SEPARATORS = [
     {
-        'name': 'Unix / OS X',
-        'sep': '\\n'
+        'name': 'Unix / OS X ( \\n )',
+        'sep': '\n'
     },
     {
-        'name': 'Classic Mac',
-        'sep': '\\r'
+        'name': 'Classic Mac ( \\r )',
+        'sep': '\r'
     },
     {
-        'name': 'Windows',
-        'sep': '\\r\\n'
+        'name': 'Windows ( \\r\\n )',
+        'sep': '\r\n'
     },
 ]
 

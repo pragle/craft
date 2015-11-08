@@ -11,7 +11,7 @@ from utils.conf import GenConfig
 logger = logging.getLogger()
 
 
-class Generator():
+class Generator:
 
     def __init__(self, conf):
         self.conf = GenConfig(conf)

@@ -22,7 +22,8 @@ class GenConfig:
         GenConfig.TAB = data['tabulation']
         GenConfig.SEP = data['separator']
 
-class Config(object):
+
+class Config:
 
     @staticmethod
     def parse(filename):

@@ -17,5 +17,6 @@ class RulesRouter:
     def configure(self):
         self.app.add_url_rule(self.prefix+'/', 'index', self.html.index)
         self.app.add_url_rule(self.prefix+'/data', 'data', self.data.initial_data)
-        self.app.add_url_rule(self.prefix+'/connection/test', 'connection_test', self.data.connection_test,
-                              methods=['POST'])
+        self.app.add_url_rule(self.prefix+'/db/test', 'db_test', self.data.db_test, methods=['POST'])
+        self.app.add_url_rule(self.prefix+'/code/generate', 'code_generate',
+                              self.data.code_generate, methods=['POST'])
