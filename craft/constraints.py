@@ -64,3 +64,5 @@ SEPARATORS = [
         'sep': '\\r\\n'
     },
 ]
+
+POPUP_TIMEOUT = 1000

@@ -1,6 +1,6 @@
 <div>
     <div id="db_config">
-        <h2>Database Configuration : </h2>
+        <h2>Database Connection : </h2>
         <div id="db_config_type">
             <span>Type : </span>
             <select ng-model="main.data.db" ng-options="one.name for one in main.data.data.db track by one.name">
@@ -11,8 +11,6 @@
             <input type="text" ng-model="main.data.db.host" />
             <span>Port : </span>
             <input type="text" ng-model="main.data.db.port" />
-        </div>
-        <div>
             <input type="button" value="Test Connection" ng-click="conf.testConnectionClick()" />
         </div>
     </div>
@@ -44,9 +42,7 @@
                     {{one.name}}
                 </option>
             </select>
+            <input type="button" value="Generate" />
         </div>
-    </div>
-    <div>
-        <input type="button" value="Generate" />
     </div>
 </div>

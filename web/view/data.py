@@ -36,4 +36,4 @@ class Data:
         # reset database
         Base.metadata.drop_all(db._engine)
         Base.metadata.create_all(db._engine)
-        return json.dumps({'code': 0, 'msg': 'Connection ok', 'time':1000, 'data': None})
+        return json.dumps({'code': 0, 'msg': 'Connection ok', 'time': constraints.POPUP_TIMEOUT, 'data': None})
