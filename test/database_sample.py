@@ -29,6 +29,7 @@ class Address(Base):
 
     person = Column(Integer, ForeignKey('address.id'))
 
+
 def start(conf):
     db = DBConnector(conf)
     db.create_session()
@@ -38,7 +39,7 @@ def start(conf):
 
 if __name__ == '__main__':
     conf = {
-        'path':'sqlite:///test.db',
-        'echo':True
+        'path': 'sqlite:///test.db',
+        'echo': True
     }
     start(conf)

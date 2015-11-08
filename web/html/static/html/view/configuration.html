@@ -1,7 +1,4 @@
 <div>
-    <div>{{main.data.data}}}</div>
-    <div>{{conf.siema}}</div>
-    <div>{{main.data.connectionTest}}</div>
     <div id="db_config">
         <h2>Database Configuration : </h2>
         <div id="db_config_type">
@@ -16,7 +13,6 @@
             <input type="text" ng-model="main.data.db.port" />
         </div>
         <div>
-            <button ng-click="conf.flashTest()">Flash Test</button>
             <input type="button" value="Test Connection" ng-click="conf.testConnectionClick()" />
         </div>
     </div>
@@ -44,9 +40,9 @@
             <input type="text" value="    " />
             <span>Line separator : </span>
             <select>
-                <option>Unix / OS X (\n)</option>
-                <option>Classic Mac (\r)</option>
-                <option>Windows (\r\n)</option>
+                <option ng-repeat="one in main.data.data.separator">
+                    {{one.name}}
+                </option>
             </select>
         </div>
     </div>

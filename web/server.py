@@ -29,7 +29,7 @@ class WebApp:
         router.RulesRouter(self.app).configure()
 
         logger.info('craft-server-start')
-        self.app.run(host=host, port=port, debug=debug, use_reloader=True)
+        self.app.run(host=host, port=port, debug=debug, use_reloader=False)
 
     def stop(self):
         func = request.environ.get('werkzeug.server.shutdown')
