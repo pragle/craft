@@ -16,8 +16,8 @@
 
 var craftApp = angular.module('craftApp', ['ui.router', 'mainModule', 'configModule'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-        console.log("Config")
-        $urlRouterProvider.otherwise('/home')
+        console.log("Config");
+        $urlRouterProvider.otherwise('/home');
 
         $stateProvider.state('home', {
             url: '/home',
@@ -34,22 +34,31 @@ var craftApp = angular.module('craftApp', ['ui.router', 'mainModule', 'configMod
     }]);
 
 craftApp.factory('RemoteCall', ['$http', 'AppModel', function ($http, AppModel) {
+    function checkValid(data) {
+        var result = data.code == 0 ? true : false;
+        if(data.msg != '') {
+            AppModel.flash.add({'type':~~(data.code/100), 'message':data.msg, 'time':data.time});
+        }
+        return result;
+    }
     var RemoteCall = {
         getData: function () {
             $http({
                 url: '/data',
                 method: 'GET'
             }).success(function(data){
-                AppModel.data = data.data;
-                var db = data.data.db;
-                for(var i =0;i<db.length;i++) {
-                    // DEFAULT DATABASE SET HERE
-                    if(db[i].name == 'sqlite') {
-                        AppModel.db = db[i];
-                        break;
+                if(checkValid(data)) {
+                    AppModel.data = data.data;
+                    var db = data.data.db;
+                    for(var i =0;i<db.length;i++) {
+                        // DEFAULT DATABASE SET HERE
+                        if(db[i].name == 'sqlite') {
+                            AppModel.db = db[i];
+                            break;
+                        }
                     }
                 }
-            })
+            });
         },
         testConnection: function() {
             $http({
@@ -57,7 +66,7 @@ craftApp.factory('RemoteCall', ['$http', 'AppModel', function ($http, AppModel) 
                 method: 'POST',
                 data:AppModel.db
             }).success(function(data) {
-                AppModel.connectionTest = data.code == 0;
+                checkValid(data);
             });
         }
     }
@@ -68,10 +77,12 @@ craftApp.factory('AppModel', ['$timeout', function ($timeout) {
     var AppModel = {
         flash: {
             messages:[],
+            id:0,
             types:['success', 'info', 'warning', 'danger'],
             add: function(message) {
-                var i = AppModel.flash.messages.length+1;
-                message.id = i;
+                AppModel.flash.id+=1;
+                message.id = AppModel.flash.id;
+                message.type = AppModel.flash.types[message.type];
                 AppModel.flash.messages.push(message);
                 $timeout(function() {
                     $(".flash-"+message.id).fadeTo(500, 0).slideUp(500, function(){
