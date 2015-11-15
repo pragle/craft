@@ -66,8 +66,8 @@ class Column(broker.Column):
             out += 'primary_key=True'
         #if self.foreignkey is not None:
         #    out += ', ForeignKey(\''+ForeignKey(self.foreignkey).get()+'\')'
-        if not self.nullable:
-            out += ', null=True'
+        #if not self.nullable:
+        #    out += ', null=True'
         if self.unique:
             out += ', unique=True'
         out += ')'
