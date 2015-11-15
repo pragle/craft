@@ -10,5 +10,6 @@ def name_to_camelcase(name, sep):
         out += one[0].upper()+one[1:]
     return out
 
+
 def upper_first(name):
     return name[0].upper()+name[1:]
