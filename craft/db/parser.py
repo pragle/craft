@@ -73,6 +73,8 @@ class DBParser(object):
             if name == postgres.postgresql.DOUBLE_PRECISION.__name__:
                 if type.precision is not None:
                     out.precision = type.precision
+            elif name == postgres.postgresql.ARRAY.__name__:
+                out.item_type = str(type.item_type)
         elif name in mysql.types and self.dbversion is 'mysql':
             out.version = 'mysql'
         return out
