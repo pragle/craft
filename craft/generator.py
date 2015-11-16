@@ -21,7 +21,7 @@ class Generator:
         self.config = config
 
         self.db = DBConnector({
-            'path': config.get_db_path(),
+            'path': config.db.get_db_path(),
             'echo': True,
         })
         self.db.create_session()

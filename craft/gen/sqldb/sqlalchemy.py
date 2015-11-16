@@ -98,8 +98,9 @@ class Column(broker.Column):
             if self.sequence_name:
                 out += ', Sequence(\''+self.sequence_name+'\')'
             out += ', primary_key=True'
-        if not self.nullable:
-            out += ', nullable=True'
+        # COMMENTED
+        #if not self.nullable:
+        #    out += ', nullable=True'
         if self.unique:
             out += ', unique=True'
         out += ')'

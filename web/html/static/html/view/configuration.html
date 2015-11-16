@@ -21,7 +21,6 @@
                     <span>Port : </span>
                     <input type="text" class="form-control" ng-model="main.data.db.port" />
                 </div>
-                <br />
             </div>
             <!-- IF SHOULD AUTHENTICATE -->
             <div ng-if="main.data.db.auth">
@@ -33,10 +32,14 @@
                     <span>Password : </span>
                     <input type="password" class="form-control" ng-model="main.data.db.password" />
                 </div>
-                <br />
+                <div>
+                    <span>Database : </span>
+                    <input type="text" class="form-control" ng-model="main.data.db.db" />
+                </div>
             </div>
             <div>
                 <div>
+                    <br />
                     <input type="button" class="btn btn-default" value="Test Connection"
                            ng-click="conf.testConnectionClick()" />
                 </div>

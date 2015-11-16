@@ -5,7 +5,7 @@ __author__ = 'Michal Szczepanski'
 
 import logging
 
-from craft import constraints, model_factory
+from craft import constraints, model_factory, model
 from craft.db.connector import DBConnector
 from craft.generator import Generator
 
@@ -32,8 +32,9 @@ class Data:
 
     def db_test(self):
         data = json.loads(request.data)
+        config = model.DBConfig(data)
         db = DBConnector({
-            'path': 'sqlite:///'+data['host'],
+            'path': config.get_db_path(),
             'echo': True,
         })
         db.create_session()

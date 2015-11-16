@@ -7,48 +7,56 @@ SQL_DB_TYPES = [
         'name': 'drizzle',
         'host': '127.0.0.1',
         'port': 4427,
+        'db': '',
         'auth': True
     },
     {
         'name': 'firebird',
         'host': '127.0.0.1',
         'port': 3050,
+        'db': '',
         'auth': True
     },
     {
         'name': 'mssql',
         'host': '127.0.0.1',
         'port': 1433,
+        'db': '',
         'auth': True
     },
     {
         'name': 'mysql',
         'host': '127.0.0.1',
         'port': 3306,
+        'db': '',
         'auth': True
     },
     {
         'name': 'oracle',
         'host': '127.0.0.1',
         'port': 1521,
+        'db': '',
         'auth': True
     },
     {
         'name': 'postgresql',
         'host': '127.0.0.1',
         'port': 5432,
+        'db': '',
         'auth': True
     },
     {
         'name': 'sqlite',
         'host': 'test.db',
         'port': None,
+        'db': '',
         'auth': False
     },
     {
         'name': 'sybase',
         'host': '127.0.0.1',
         'port': 2638,
+        'db': '',
         'auth': True
     },
 ]

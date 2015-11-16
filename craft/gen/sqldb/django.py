@@ -16,6 +16,7 @@ class DjangoGenerator(base.BaseGenerator):
 
         code.data += self.header()
         code.data += 'from django.db import models'+SEP
+        code.data += 'from django.contrib.postgres.fields import ArrayField'
         code.data += SEP
         for one in self.structure.tables:
             code.data += Table(one, self.config).get()
@@ -60,10 +61,11 @@ class Column(broker.Column):
         self.__dict__ = parent.__dict__
 
     def get(self):
+        type = Type(self.type).get()
         out = ''
         out += self.name
         out += ' = '
-        out += Type(self.type).get()
+        out += type
         out += '('
         if self.primary:
             #if self.sequence_name:
@@ -110,9 +112,22 @@ class Type(broker.Type):
             return 'models.TextField'
         elif self.name == 'NullType':
             return 'models.Field'
+        elif self.name == 'NUMERIC':
+            return 'models.DecimalField'
+        elif self.name == 'CHAR':
+            return 'models.CharField'
+        elif self.name == 'ENUM':
+            #http://stackoverflow.com/questions/21454/specifying-a-mysql-enum-in-a-django-model
+            return 'models.CharField'
+        elif self.name == 'DATE':
+            return 'models.DateTimeField'
+        elif self.name == 'ARRAY':
+            #from django.contrib.postgres.fields import ArrayField
+            #https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#arrayfield
+            return 'ArrayField'
+        else:
+            return self.name
 
+    #TODO implement imports
     def imp(self):
-        if self.version == 'sql':
-            return 'from sqlalchemy.types import '+self.name
-        elif self.version == 'psql':
-            return 'from sqlalchemy.dialects.postgres import '+self.name
+        return ''

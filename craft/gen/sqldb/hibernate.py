@@ -147,6 +147,9 @@ class Type(broker.Type):
             return 'String'
         elif self.name == 'NullType':
             return 'Object'
+        else:
+            return self.name
 
+    #TODO implement imports
     def imp(self):
         return ''

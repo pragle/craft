@@ -41,3 +41,4 @@ class Type():
         self.timezone = None
         self.precision = None
         self.length = None
+        self.item_type = None
