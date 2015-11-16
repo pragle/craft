@@ -3,31 +3,36 @@
 __author__ = 'Michal Szczepanski'
 
 import os
-import shutil
 
 from craft import broker
 from craft import util
-from craft.gen.sqldb.base import BaseGenerator
+from craft.gen.sqldb import base
 
 
-class HibernateGenerator(BaseGenerator):
+class HibernateGenerator(base.BaseGenerator):
 
-    def generate(self):
+    def generate(self, output):
+
         package = self.config.orm['package']
-        dir = util.make_dirs(package, '.')
-        for one in self.structure.tables:
-            clazz = util.name_to_camelcase(one.name, '_')
-            with open(dir+os.sep+clazz+'.java', 'w+') as f:
-                out = ''
-                out += self.file_header(package)
-                out += Table(one, self.config).get()
-                out += '}'
-                f.write(out)
 
-    def file_header(self, file):
+        dir = os.sep.join(package.split('.'))
+
+        for one in self.structure.tables:
+
+            clazz = util.name_to_camelcase(one.name, '_')
+            filename = dir+os.sep+clazz+'.java'
+
+            code = base.GeneratorOutputFile(filename)
+            code.data += self.file_header(package)
+            code.data += Table(one, self.config).get()
+            code.data += '}'+self.config.separator
+
+            output.orm.append(code)
+
+    def file_header(self, package):
         SEP = self.config.separator
         out = ''
-        out += 'package '+file+';'+SEP
+        out += 'package '+package+';'+SEP
         out += SEP
         out += 'import java.io.Serializable;'+SEP
         out += 'import javax.persistence.Table;'+SEP

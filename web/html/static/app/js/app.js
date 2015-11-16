@@ -94,7 +94,12 @@ craftApp.factory('RemoteCall', ['$http', 'AppModel', function ($http, AppModel) 
                 data: out
             }).success(function(data) {
                 if(checkValid(data)) {
-                    console.log(data.data);
+                    var orm = data.data.orm,
+                        code = '';
+                    for(var i = 0;i<orm.length;i++) {
+                         code += orm[i].data;
+                    }
+                    AppModel.code = code;
                 }
             });
         }

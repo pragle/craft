@@ -3,23 +3,23 @@
 __author__ = 'Michal Szczepanski'
 
 from craft import broker, util
-from craft.gen.sqldb.base import BaseGenerator
+from craft.gen.sqldb import base
 
 '''
 Generates SQLAlchemyCode in pep8 compatibile format
 '''
-class SQLAlchemyGenerator(BaseGenerator):
+class SQLAlchemyGenerator(base.BaseGenerator):
 
-    def generate(self):
-        code = open(self.config.orm['file'], 'w+')
-        out = ''
-        out += self.header()
-        out += self.resolve_import(self.structure.tables)
+    def generate(self, output):
+        code = base.GeneratorOutputFile(self.config.orm['file'])
+        code.data += self.header()
+        code.data += self.resolve_import(self.structure.tables)
         for one in self.structure.tables:
-            out += Table(one, self.config).get(self.structure.deps)
-            out += self.config.separator
-        out = out[:len(out)-1]
-        code.write(out)
+            code.data += Table(one, self.config).get(self.structure.deps)
+            code.data += self.config.separator
+        code.data = code.data[:len(code.data)-1]
+
+        output.orm.append(code)
 
     def header(self):
         SEP = self.config.separator

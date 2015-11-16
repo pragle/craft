@@ -4,23 +4,25 @@ __author__ = 'Michal Szczepanski'
 
 from craft import broker
 from craft import util
-from craft.gen.sqldb.base import BaseGenerator
+from craft.gen.sqldb import base
 
 
-class DjangoGenerator(BaseGenerator):
+class DjangoGenerator(base.BaseGenerator):
 
-    def generate(self):
+    def generate(self, output):
         SEP = self.config.separator
-        code = open(self.config.orm['file'], 'w+')
-        out = ''
-        out += self.header()
-        out += 'from django.db import models'+SEP
-        out += SEP
+
+        code = base.GeneratorOutputFile(self.config.orm['file'])
+
+        code.data += self.header()
+        code.data += 'from django.db import models'+SEP
+        code.data += SEP
         for one in self.structure.tables:
-            out += Table(one, self.config).get()
-            out += SEP
-        out = out[:len(out)-1]
-        code.write(out)
+            code.data += Table(one, self.config).get()
+            code.data += SEP
+        code.data = code.data[:len(code.data)-1]
+
+        output.orm.append(code)
 
     def header(self):
         SEP = self.config.separator

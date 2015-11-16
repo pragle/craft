@@ -10,6 +10,7 @@ from craft.db.connector import DBConnector
 from craft.gen.sqldb.sqlalchemy import SQLAlchemyGenerator
 from craft.gen.sqldb.hibernate import HibernateGenerator
 from craft.gen.sqldb.django import DjangoGenerator
+from craft.gen.sqldb.base import GeneratorOutput
 
 logger = logging.getLogger()
 
@@ -29,16 +30,15 @@ class Generator:
 
         name = self.config.orm['name']
         if name == 'sqlalchemy':
-            self.generator = SQLAlchemyGenerator(config, self.structure)
+            self.orm = SQLAlchemyGenerator(config, self.structure)
         elif name == 'django':
-            self.generator = DjangoGenerator(config, self.structure)
+            self.orm = DjangoGenerator(config, self.structure)
         elif name == 'hibernate':
-            self.generator = HibernateGenerator(config, self.structure)
+            self.orm = HibernateGenerator(config, self.structure)
         else:
-            self.generator = None
+            self.orm = Generator(config, self.structure)
 
     def generate(self):
-        if self.generator is not None:
-            self.generator.generate()
-        else:
-            logger.warn('no such generator')
+        output = GeneratorOutput()
+        self.orm.generate(output)
+        return output.serialize()

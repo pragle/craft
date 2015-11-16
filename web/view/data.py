@@ -45,4 +45,4 @@ class Data:
         generator = Generator(config)
         out = generator.generate()
         logger.info('code generate : %s' % request.data)
-        return json.dumps({'code': 0, 'msg': 'TODO', 'time': constraints.POPUP_TIMEOUT, 'data': out})
+        return json.dumps({'code': 0, 'msg': '', 'time': constraints.POPUP_TIMEOUT, 'data': out})
