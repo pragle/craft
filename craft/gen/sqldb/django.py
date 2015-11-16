@@ -2,27 +2,28 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
-from utils.conf import GenConfig
 from craft import broker
 from craft import util
+from craft.gen.sqldb.base import BaseGenerator
 
-class DjangoGenerator():
 
-    def generate(self, structure, conf):
-        SEP = GenConfig.SEP
-        code = open(conf.file, 'w+')
+class DjangoGenerator(BaseGenerator):
+
+    def generate(self):
+        SEP = self.config.separator
+        code = open(self.config.orm['file'], 'w+')
         out = ''
         out += self.header()
         out += 'from django.db import models'+SEP
         out += SEP
-        for one in structure.tables:
-            out += Table(one).get()
+        for one in self.structure.tables:
+            out += Table(one, self.config).get()
             out += SEP
         out = out[:len(out)-1]
         code.write(out)
 
     def header(self):
-        SEP = GenConfig.SEP
+        SEP = self.config.separator
         out = '#!/usr/bin/env python'+SEP
         out += '# -*- coding: utf-8 -*-'+SEP
         out += '"""'+SEP
@@ -33,14 +34,16 @@ class DjangoGenerator():
         out += SEP
         return out
 
+
 class Table(broker.Table):
 
-    def __init__(self, parent):
+    def __init__(self, parent, config):
         self.__dict__ = parent.__dict__
+        self.config = config
 
     def get(self):
-        SEP = GenConfig.SEP
-        TAB = GenConfig.TAB
+        SEP = self.config.separator
+        TAB = self.config.tabulation
         out = ''+SEP
         clazz = util.name_to_camelcase(self.name, '_')
         out += 'class '+clazz+'(models.Model):'+SEP
@@ -73,6 +76,7 @@ class Column(broker.Column):
         out += ')'
         return out
 
+
 class ForeignKey(broker.ForeignKey):
 
     def __init__(self, parent):
@@ -80,6 +84,7 @@ class ForeignKey(broker.ForeignKey):
 
     def get(self):
         return self.fullname
+
 
 class Type(broker.Type):
 

@@ -6,66 +6,74 @@ SQL_DB_TYPES = [
     {
         'name': 'drizzle',
         'host': '127.0.0.1',
-        'port': 123
+        'port': 4427,
+        'auth': True
     },
     {
         'name': 'firebird',
         'host': '127.0.0.1',
-        'port': 123
+        'port': 3050,
+        'auth': True
     },
     {
         'name': 'mssql',
         'host': '127.0.0.1',
-        'port': 123
+        'port': 1433,
+        'auth': True
     },
     {
         'name': 'mysql',
         'host': '127.0.0.1',
-        'port': 123
+        'port': 3306,
+        'auth': True
     },
     {
         'name': 'oracle',
         'host': '127.0.0.1',
-        'port': 123
+        'port': 1521,
+        'auth': True
     },
     {
         'name': 'postgresql',
         'host': '127.0.0.1',
-        'port': 123
+        'port': 5432,
+        'auth': True
     },
     {
         'name': 'sqlite',
         'host': 'test.db',
-        'port': None
+        'port': None,
+        'auth': False
     },
     {
         'name': 'sybase',
         'host': '127.0.0.1',
-        'port': 123
+        'port': 2638,
+        'auth': True
     },
 ]
 
-FRAMEWORKS = [
+ORM = [
     {
         'language': 'python',
-        'framework': [
+        'orm': [
             {
-                'name':'django',
-                'file':'models.py'
+                'name': 'django',
+                'file': 'models.py'
             },
             {
-                'name':'SQLAlchemy',
-                'file':'model.py'
+                'name': 'sqlalchemy',
+                'file': 'model.py'
             },
         ],
         'tabulation': '    ',
     },
     {
         'language': 'java',
-        'framework': [
+        'orm': [
             {
-                'name':'Hibernate',
-                'file':'com.test'
+                'name': 'hibernate',
+                'package': 'com.test'
             }
         ],
         'tabulation': '\\t'

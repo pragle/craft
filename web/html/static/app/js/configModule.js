@@ -19,9 +19,9 @@
                 RemoteCall.testConnection();
             }
 
-            conf.frameworkSelectedChange = function() {
-                AppModel.frameworkSelected = AppModel.framework.framework[0];
-                AppModel.tabulation = AppModel.framework.tabulation;
+            conf.ormSelectedChange = function() {
+                AppModel.ormSelected = AppModel.orm.orm[0];
+                AppModel.tabulation = AppModel.orm.tabulation;
             }
 
             conf.generateClick = function() {

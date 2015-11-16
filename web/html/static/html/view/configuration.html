@@ -1,5 +1,5 @@
 <div>
-    <div>{{main.data.dbconf}}</div>
+    <!--<div>{{main.data.dbconf}}</div>-->
     <div class="all-20">
         <h2>Database Connection : </h2>
         <div class="row">
@@ -22,6 +22,18 @@
             </div>
             <br />
         </div>
+        <!-- IF SHOULD AUTHENTICATE -->
+        <div ng-if="main.data.db.auth" class="row top-20" >
+            <div class="col-md-3">
+                <span>Username : </span>
+                <input type="text" class="form-control" ng-model="main.data.db.username" />
+            </div>
+            <div class="col-md-3">
+                <span>Password : </span>
+                <input type="password" class="form-control" ng-model="main.data.db.password" />
+            </div>
+            <br />
+        </div>
         <div class="row top-20">
             <div class="col-md-3">
                 <input type="button" class="btn btn-default" value="Test Connection"
@@ -35,16 +47,16 @@
             <div class="col-md-3">
                 <span>Language : </span>
                 <select class="form-control"
-                        ng-model="main.data.framework"
-                        ng-change="conf.frameworkSelectedChange()"
-                        ng-options="one.language for one in main.data.dbconf.framework track by one.language">
+                        ng-model="main.data.orm"
+                        ng-change="conf.ormSelectedChange()"
+                        ng-options="one.language for one in main.data.dbconf.orm track by one.language">
                 </select>
             </div>
             <div class="col-md-3">
                 <span>Framework : </span>
                 <select class="form-control"
-                        ng-model="main.data.frameworkSelected"
-                        ng-options="one.name for one in main.data.framework.framework track by one.name">
+                        ng-model="main.data.ormSelected"
+                        ng-options="one.name for one in main.data.orm.orm track by one.name">
                 </select>
             </div>
         </div>

@@ -3,26 +3,26 @@
 __author__ = 'Michal Szczepanski'
 
 from craft import broker, util
-from utils.conf import GenConfig
+from craft.gen.sqldb.base import BaseGenerator
 
 '''
 Generates SQLAlchemyCode in pep8 compatibile format
 '''
-class SQLAlchemyGenerator(object):
+class SQLAlchemyGenerator(BaseGenerator):
 
-    def generate(self, structure, conf):
-        code = open(conf.file, 'w+')
+    def generate(self):
+        code = open(self.config.orm['file'], 'w+')
         out = ''
         out += self.header()
-        out += self.resolve_import(structure.tables)
-        for one in structure.tables:
-            out += Table(one).get(structure.deps)
-            out += GenConfig.SEP
+        out += self.resolve_import(self.structure.tables)
+        for one in self.structure.tables:
+            out += Table(one, self.config).get(self.structure.deps)
+            out += self.config.separator
         out = out[:len(out)-1]
         code.write(out)
 
     def header(self):
-        SEP = GenConfig.SEP
+        SEP = self.config.separator
         out = '#!/usr/bin/env python'+SEP
         out += '# -*- coding: utf-8 -*-'+SEP
         out += '"""'+SEP
@@ -34,7 +34,7 @@ class SQLAlchemyGenerator(object):
         return out
 
     def resolve_import(self, tables):
-        SEP = GenConfig.SEP
+        SEP = self.config.separator
         imp = set()
         for one in tables:
             for two in one.columns:
@@ -55,12 +55,13 @@ class SQLAlchemyGenerator(object):
 
 class Table(broker.Table):
 
-    def __init__(self, parent):
+    def __init__(self, parent, config):
         self.__dict__ = parent.__dict__
+        self.config = config
 
     def get(self, deps):
-        SEP = GenConfig.SEP
-        TAB = GenConfig.TAB
+        SEP = self.config.separator
+        TAB = self.config.tabulation
         out = ''+SEP
         clazz = util.name_to_camelcase(self.name, '_')
         out += 'class '+clazz+'(Base):'+SEP

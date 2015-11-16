@@ -3,27 +3,42 @@
 __author__ = 'Michal Szczepanski'
 
 import logging
+
+from craft.db.parser import DBParser
+from craft.db.connector import DBConnector
+
 from craft.gen.sqldb.sqlalchemy import SQLAlchemyGenerator
 from craft.gen.sqldb.hibernate import HibernateGenerator
 from craft.gen.sqldb.django import DjangoGenerator
-from utils.conf import GenConfig
 
 logger = logging.getLogger()
 
 
 class Generator:
 
-    def __init__(self, conf):
-        self.conf = GenConfig(conf)
-        if self.conf.name == 'sqlalchemy':
-            self.generator = SQLAlchemyGenerator()
-        elif self.conf.name == 'django':
-            self.generator = DjangoGenerator()
-        elif self.conf.name == 'hibernate':
-            self.generator = HibernateGenerator()
+    def __init__(self, config):
+        self.config = config
 
-    def generate(self, structure):
+        self.db = DBConnector({
+            'path': config.get_db_path(),
+            'echo': True,
+        })
+        self.db.create_session()
+        self.parser = DBParser()
+        self.structure = self.parser.parsetables(self.db.get_metadata(), self.db.dbversion)
+
+        name = self.config.orm['name']
+        if name == 'sqlalchemy':
+            self.generator = SQLAlchemyGenerator(config, self.structure)
+        elif name == 'django':
+            self.generator = DjangoGenerator(config, self.structure)
+        elif name == 'hibernate':
+            self.generator = HibernateGenerator(config, self.structure)
+        else:
+            self.generator = None
+
+    def generate(self):
         if self.generator is not None:
-            self.generator.generate(structure=structure, conf=self.conf)
+            self.generator.generate()
         else:
             logger.warn('no such generator')

@@ -58,12 +58,12 @@ craftApp.factory('RemoteCall', ['$http', 'AppModel', function ($http, AppModel) 
                         }
                     }
                     // assign framework
-                    var fram = data.data.framework;
-                    for(var i =0;i<fram.length;i++) {
-                        if(fram[i].language == 'python') {
-                            AppModel.framework = fram[i];
-                            AppModel.frameworkSelected = fram[i].framework[0];
-                            AppModel.tabulation = fram[i].tabulation;
+                    var orm = data.data.orm;
+                    for(var i =0;i<orm.length;i++) {
+                        if(orm[i].language == 'python') {
+                            AppModel.orm = orm[i];
+                            AppModel.ormSelected = orm[i].orm[0];
+                            AppModel.tabulation = orm[i].tabulation;
                             break;
                         }
                     }
@@ -82,8 +82,8 @@ craftApp.factory('RemoteCall', ['$http', 'AppModel', function ($http, AppModel) 
         },
         generateCode: function() {
             out = {
-                language:AppModel.framework.language,
-                framework:AppModel.frameworkSelected,
+                language:AppModel.orm.language,
+                orm:AppModel.ormSelected,
                 tabulation:AppModel.tabulation,
                 db:AppModel.db,
                 separator:AppModel.separator,

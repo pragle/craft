@@ -5,10 +5,9 @@ __author__ = 'Michal Szczepanski'
 
 import logging
 
-from craft import constraints
+from craft import constraints, model_factory
 from craft.db.connector import DBConnector
-from craft.db.parser import DBParser
-from craft.generator import Generator, GenConfig
+from craft.generator import Generator
 
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -26,7 +25,7 @@ class Data:
     def initial_data(self):
         data = {
             'db': constraints.SQL_DB_TYPES,
-            'framework': constraints.FRAMEWORKS,
+            'orm': constraints.ORM,
             'separator': constraints.SEPARATORS
         }
         return json.dumps({'code': 0, 'msg': '', 'data': data})
@@ -42,21 +41,8 @@ class Data:
 
     def code_generate(self):
         data = json.loads(request.data)
-        db = DBConnector({
-            'path': 'sqlite:///'+data['db']['host'],
-            'echo': True,
-        })
-        db.create_session()
-        parser = DBParser()
-        structure = parser.parsetables(db.get_metadata(), db.dbversion)
-        conf = {
-            'name': data['framework']['name'],
-            'language': data['language'],
-            'tabulation': data['tabulation'],
-            'separator': data['separator']['sep'],
-            'file': data['framework']['file'],
-        }
-        generator = Generator(conf)
-        generator.generate(structure)
+        config = model_factory.create_config(data)
+        generator = Generator(config)
+        out = generator.generate()
         logger.info('code generate : %s' % request.data)
-        return json.dumps({'code': 0, 'msg': 'TODO', 'time': constraints.POPUP_TIMEOUT, 'data': None})
+        return json.dumps({'code': 0, 'msg': 'TODO', 'time': constraints.POPUP_TIMEOUT, 'data': out})

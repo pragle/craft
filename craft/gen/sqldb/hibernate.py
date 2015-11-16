@@ -5,30 +5,27 @@ __author__ = 'Michal Szczepanski'
 import os
 import shutil
 
-from utils.conf import GenConfig
 from craft import broker
 from craft import util
+from craft.gen.sqldb.base import BaseGenerator
 
 
-class HibernateGenerator():
+class HibernateGenerator(BaseGenerator):
 
-    def generate(self, structure, conf):
-        dir = os.sep.join(conf.file.split('.'))
-        if os.path.exists(dir):
-           shutil.rmtree(dir)
-        os.makedirs(dir)
-        for one in structure.tables:
+    def generate(self):
+        package = self.config.orm['package']
+        dir = util.make_dirs(package, '.')
+        for one in self.structure.tables:
             clazz = util.name_to_camelcase(one.name, '_')
             with open(dir+os.sep+clazz+'.java', 'w+') as f:
                 out = ''
-                out += self.file_header(conf.file)
-                out += Table(one).get()
+                out += self.file_header(package)
+                out += Table(one, self.config).get()
                 out += '}'
                 f.write(out)
 
-
     def file_header(self, file):
-        SEP = GenConfig.SEP
+        SEP = self.config.separator
         out = ''
         out += 'package '+file+';'+SEP
         out += SEP
@@ -41,14 +38,16 @@ class HibernateGenerator():
         out += SEP
         return out
 
+
 class Table(broker.Table):
 
-    def __init__(self, parent):
+    def __init__(self, parent, config):
         self.__dict__ = parent.__dict__
+        self.config = config
 
     def get(self):
         clazz = util.name_to_camelcase(self.name, '_')
-        SEP = GenConfig.SEP
+        SEP = self.config.separator
         out = ''
         out += '/**'+SEP
         out += '* @author craft generated'+SEP
@@ -58,20 +57,21 @@ class Table(broker.Table):
         out += 'public class '+clazz+' implements Serializable {'+SEP
         out += SEP
         for one in self.columns:
-            out += Column(one).get()
+            out += Column(one, self.config).get()
         for one in self.columns:
-            out += Column(one).getset()
+            out += Column(one, self.config).getset()
         return out
 
 
 class Column(broker.Column):
 
-    def __init__(self, parent):
+    def __init__(self, parent, config):
         self.__dict__ = parent.__dict__
+        self.config = config
 
     def get(self):
-        SEP = GenConfig.SEP
-        TAB = GenConfig.TAB
+        SEP = self.config.separator
+        TAB = self.config.tabulation
         out = ''
         if self.primary:
             out += TAB+'@Id'+SEP
@@ -96,8 +96,8 @@ class Column(broker.Column):
         return out
 
     def getset(self):
-        SEP = GenConfig.SEP
-        TAB = GenConfig.TAB
+        SEP = self.config.separator
+        TAB = self.config.tabulation
         one = Type(self.type).get()
         out = ''
         out += TAB+'public '+one+' get'
@@ -114,6 +114,7 @@ class Column(broker.Column):
         out += SEP
         return out
 
+
 class ForeignKey(broker.ForeignKey):
 
     def __init__(self, parent):
@@ -121,6 +122,7 @@ class ForeignKey(broker.ForeignKey):
 
     def get(self):
         return self.fullname
+
 
 class Type(broker.Type):
 
