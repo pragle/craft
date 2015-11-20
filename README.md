@@ -6,5 +6,5 @@ Craft
 
 <h5>What it's all about ? </h5>
 <p>noting much more now then :</p>
-1. connect to database
+1. connect to database ( sqlite / postgresql )
 2. generate django / sqlalchemy / hibernate orm code from your database structure
