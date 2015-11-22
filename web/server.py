@@ -5,15 +5,17 @@ __author__ = 'Michal Szczepanski'
 import logging
 from flask import Flask, request
 from utils import dependencies
-from web import router
+from web import router, db_connector, cache
 
 logger = logging.getLogger()
 
 
 class WebApp:
-    def __init__(self, www):
+    def __init__(self, www, db_path):
         self.www = www
+        self.db = db_connector.DB(db_path)
         self.html_dependencies()
+        self.cache = cache.Cache()
 
     def start(self):
         host = self.www['host']
@@ -26,7 +28,7 @@ class WebApp:
                          static_folder=static_folder,
                          template_folder=template_folder)
 
-        router.RulesRouter(self.app).configure()
+        router.RulesRouter(self.app, self.db, self.cache).configure()
 
         logger.info('craft-server-start')
         self.app.run(host=host, port=port, debug=debug, use_reloader=False)

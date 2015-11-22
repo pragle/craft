@@ -12,6 +12,9 @@ class Config:
         self.separator = data[3]
         self.tabulation = data[4]
 
+    def get_db_path(self):
+        return self.db.get_db_path()
+
 
 class DBConfig:
     def __init__(self, db):

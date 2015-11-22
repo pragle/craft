@@ -2,15 +2,18 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Michal Szczepanski'
 
-from web.view import html, data
+from web.view import html, data, dbconnection
 
 
 class RulesRouter:
-    def __init__(self, app):
+    def __init__(self, app, db, cache):
         self.app = app
+        self.db = db
+        self.cache = cache
 
-        self.html = html.HTML(self.app)
-        self.data = data.Data(self.app)
+        self.html = html.HtmlRouter(self.app)
+        self.data = data.DataRouter(self.app, self.db)
+        self.dbconnection = dbconnection.DBConnectionRouter(self.app, self.db, self.cache)
 
         self.prefix = ''
 

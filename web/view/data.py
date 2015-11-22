@@ -8,6 +8,7 @@ import logging
 from craft import constraints, model_factory, model
 from craft.db.connector import DBConnector
 from craft.generator import Generator
+from web import model as web_model
 
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -18,9 +19,10 @@ Base = declarative_base()
 logger = logging.getLogger()
 
 
-class Data:
-    def __init__(self, app):
+class DataRouter:
+    def __init__(self, app, db):
         self.app = app
+        self.db = db
 
     def initial_data(self):
         data = {
@@ -33,10 +35,7 @@ class Data:
     def db_test(self):
         data = json.loads(request.data)
         config = model.DBConfig(data)
-        db = DBConnector({
-            'path': config.get_db_path(),
-            'echo': True,
-        })
+        db = DBConnector(config)
         db.create_session()
         return json.dumps({'code': 0, 'msg': 'Connection ok', 'time': constraints.POPUP_TIMEOUT, 'data': None})
 
@@ -47,3 +46,6 @@ class Data:
         out = generator.generate()
         logger.info('code generate : %s' % request.data)
         return json.dumps({'code': 0, 'msg': '', 'time': constraints.POPUP_TIMEOUT, 'data': out})
+
+    def get_tables(self):
+        return 'siema'

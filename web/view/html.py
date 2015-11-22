@@ -3,7 +3,7 @@
 __author__ = 'Michal Szczepanski'
 
 
-class HTML:
+class HtmlRouter:
     def __init__(self, app):
         self.app = app
 

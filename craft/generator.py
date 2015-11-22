@@ -20,10 +20,7 @@ class Generator:
     def __init__(self, config):
         self.config = config
 
-        self.db = DBConnector({
-            'path': config.db.get_db_path(),
-            'echo': True,
-        })
+        self.db = DBConnector(config)
         self.db.create_session()
         self.parser = DBParser()
         self.structure = self.parser.parsetables(self.db.get_metadata(), self.db.dbversion)

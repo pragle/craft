@@ -9,22 +9,14 @@ from flask import json
 
 
 def start():
-    '''
-    data = Config.parse('conf.json')
-    db = DBConnector(conf=data['db'])
-    parser = DBParser()
-    structure = parser.parsetables(db.get_metadata(), db.dbversion)
-    for one in data['generator']:
-        generator = Generator(one)
-        generator.generate(structure=structure)
-    '''
     # load logging configuration
     logging.config.fileConfig('conf/logging.ini')
     # load server configuration
     conf = json.load(open('conf/www.json'))
     www = conf['www']
+    db_path = conf['database']
     # start web server
-    web = server.WebApp(www)
+    web = server.WebApp(www, db_path)
     web.start()
 
 

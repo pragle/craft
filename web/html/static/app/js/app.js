@@ -14,18 +14,20 @@
  * Time: 23:04
  */
 
-var craftApp = angular.module('craftApp', ['ui.router', 'mainModule', 'configModule'])
+var craftApp = angular.module('craftApp',
+    ['ui.router', 'mainModule', 'dbModule', 'testModule'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         console.log("Config");
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/test');
 
-        $stateProvider.state('home', {
-            url: '/home',
-            templateUrl: '/static/html/view/home.html'
-        }).state('configuration', {
-            url: '/configuration',
-            templateUrl: '/static/html/view/configuration.html',
-            controller:'ConfigCtrl as conf'
+        $stateProvider.state('test', {
+            url: '/test',
+            templateUrl: '/static/html/view/test.html',
+            controller: 'TestCtrl as test'
+        }).state('database', {
+            url: '/database',
+            templateUrl: '/static/html/view/db.html',
+            controller:'DatabaseCtrl as db'
         })
     }])
     .run(['RemoteCall', function (RemoteCall) {
@@ -33,82 +35,9 @@ var craftApp = angular.module('craftApp', ['ui.router', 'mainModule', 'configMod
         RemoteCall.getData();
     }]);
 
-craftApp.factory('RemoteCall', ['$http', 'AppModel', function ($http, AppModel) {
-    function checkValid(data) {
-        var result = data.code == 0 ? true : false;
-        if(data.msg != '') {
-            AppModel.flash.add({'type':~~(data.code/100), 'message':data.msg, 'time':data.time});
-        }
-        return result;
-    }
-    var RemoteCall = {
-        getData: function () {
-            $http({
-                url: '/data',
-                method: 'GET'
-            }).success(function(data){
-                if(checkValid(data)) {
-                    AppModel.dbconf = data.data;
-                    var db = data.data.db;
-                    for(var i =0;i<db.length;i++) {
-                        // DEFAULT DATABASE SET HERE
-                        if(db[i].name == 'sqlite') {
-                            AppModel.db = db[i];
-                            break;
-                        }
-                    }
-                    // assign framework
-                    var orm = data.data.orm;
-                    for(var i =0;i<orm.length;i++) {
-                        if(orm[i].language == 'python') {
-                            AppModel.orm = orm[i];
-                            AppModel.ormSelected = orm[i].orm[0];
-                            AppModel.tabulation = orm[i].tabulation;
-                            break;
-                        }
-                    }
-                    AppModel.separator = data.data.separator[0];
-                }
-            });
-        },
-        testConnection: function() {
-            $http({
-                url: '/db/test',
-                method: 'POST',
-                data: AppModel.db
-            }).success(function(data) {
-                checkValid(data);
-            });
-        },
-        generateCode: function() {
-            out = {
-                language:AppModel.orm.language,
-                orm:AppModel.ormSelected,
-                tabulation:AppModel.tabulation,
-                db:AppModel.db,
-                separator:AppModel.separator,
-            }
-            $http({
-                url: '/code/generate',
-                method: 'POST',
-                data: out
-            }).success(function(data) {
-                if(checkValid(data)) {
-                    var orm = data.data.orm,
-                        code = '';
-                    for(var i = 0;i<orm.length;i++) {
-                         code += orm[i].data;
-                    }
-                    AppModel.code = code;
-                }
-            });
-        }
-    }
-    return RemoteCall;
-}]);
-
 craftApp.factory('AppModel', ['$timeout', function ($timeout) {
     var AppModel = {
+        databases:[],
         flash: {
             messages:[],
             id:0,
@@ -129,3 +58,15 @@ craftApp.factory('AppModel', ['$timeout', function ($timeout) {
 
     return AppModel;
 }]);
+
+craftApp.directive('popupReady', function() {
+    return {
+        restrict: 'A',
+        link: function($scope, elem, attrs) {
+            elem.ready(function(){
+                console.log(attrs);
+                $('#'+attrs.id).modal('show');
+            })
+        }
+    }
+})

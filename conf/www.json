@@ -9,5 +9,8 @@
       "path":"web/html/static/ext",
       "file":"conf/html.json"
     }
+  },
+  "database":{
+    "path":"sqlite:///craft.db"
   }
 }

@@ -16,5 +16,27 @@
             var main = this;
 
             main.data = AppModel;
-        }]);
+        }])
+        .controller('PopupCtrl', ['$scope', 'AppModel', 'RemoteCall', function ($scope, AppModel, RemoteCall) {
+            var popup = this;
+
+            popup.testConnectionClick = function() {
+                RemoteCall.testConnection();
+            }
+
+            popup.ormSelectedChange = function() {
+                AppModel.ormSelected = AppModel.orm.orm[0];
+                AppModel.tabulation = AppModel.orm.tabulation;
+            }
+
+            popup.generateCode = function() {
+                RemoteCall.generateCode();
+            }
+
+            popup.addConnection = function() {
+                var db = angular.copy(AppModel.db);
+                AppModel.databases.push(db);
+                console.log('add connection');
+            }
+        }])
 })();
