@@ -33,11 +33,11 @@
                     <ul class="nav nav-tabs">
                         <li role="presentation"
                             ui-sref-active="active">
-                            <a ui-sref="home">Home</a>
+                            <a ui-sref="database">Database</a>
                         </li>
                         <li role="presentation"
                             ui-sref-active="active">
-                            <a ui-sref="configuration">Configuration</a>
+                            <a ui-sref="test">Test</a>
                         </li>
                     </ul>
                 </div>
@@ -45,15 +45,19 @@
             <div class="row" ui-view>
 
             </div>
+            <div ng-include src="main.data.currentPopup" ng-controller="PopupCtrl as popup"></div>
         </div>
     </div>
     <script type="text/javascript" src="/static/ext/jquery/1.11.3/jquery.js"></script>
     <script type="text/javascript" src="/static/ext/jqueryui/1.11.4/jquery-ui.js"></script>
     <script type="text/javascript" src="/static/ext/bootstrap/3.3.4/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/static/ext/angular/1.3.15/angular.js"></script>
+    <script type="text/javascript" src="/static/ext/angular/1.4.8/angular.js"></script>
+    <script type="text/javascript" src="/static/ext/angular/1.4.8/angular-animate.js"></script>
     <script type="text/javascript" src="/static/ext/angular-ui-router/0.2.15/angular-ui-router.js"></script>
     <script type="text/javascript" src="/static/app/js/app.js"></script>
+    <script type="text/javascript" src="/static/app/js/remoteFactory.js"></script>
     <script type="text/javascript" src="/static/app/js/mainModule.js"></script>
-    <script type="text/javascript" src="/static/app/js/configModule.js"></script>
+    <script type="text/javascript" src="/static/app/js/dbModule.js"></script>
+    <script type="text/javascript" src="/static/app/js/testModule.js"></script>
 </body>
 </html>

@@ -1,0 +1,49 @@
+<div class="modal fade" id="generateCodePopup" tabindex="-1" role="dialog"
+     aria-labelledby="modal_label" aria-hidden="true" popup-ready>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title" id="modal_label">Generate orm code</h2>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div>
+                        <span>Language : </span>
+                        <select class="form-control"
+                                ng-model="main.data.orm"
+                                ng-change="popup.ormSelectedChange()"
+                                ng-options="one.language for one in main.data.dbconf.orm track by one.language">
+                        </select>
+                    </div>
+                    <div>
+                        <span>Framework : </span>
+                        <select class="form-control"
+                                ng-model="main.data.ormSelected"
+                                ng-options="one.name for one in main.data.orm.orm track by one.name">
+                        </select>
+                    </div>
+                </div>
+                <div class="top-20">
+                    <div>
+                        <span>Line separator : </span>
+                        <select class="form-control"
+                                ng-model="main.data.separator"
+                                ng-options="one.name for one in main.data.dbconf.separator track by one.name">
+                        </select>
+                    </div>
+                    <div>
+                        <span>Tabulation : </span>
+                        <input type="text" class="form-control" ng-model="main.data.tabulation"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                        data-dismiss="modal" aria-label="Close" ng-click="popup.generateCode()">Generate</button>
+            </div>
+        </div>
+    </div>
+</div>
