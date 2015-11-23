@@ -15,24 +15,13 @@ class DatabaseConnection(Base):
 
     __tablename__ = 'database_connection'
 
-    id = Column(Integer, primary_key=True)
+    connection_name = Column(String, unique=True, primary_key=True)
     name = Column(String)
     host = Column(String)
     port = Column(Integer)
     username = Column(String)
     password = Column(String)
-
-    tables = relationship('DatabaseName', lazy='subquery')
-
-
-class DatabaseName(Base):
-
-    __tablename__ = 'database_name'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    connection_id = Column(ForeignKey('database_connection.id'))
-
+    database = Column(String)
 
 '''
 class SSHConnection(Base):

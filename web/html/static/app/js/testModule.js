@@ -16,7 +16,7 @@
             var test = this;
 
             test.addConnection = function() {
-                RemoteCall.addConnection(null);
+                RemoteCall.addConnection(AppModel.db);
             }
 
             test.removeConnection = function() {

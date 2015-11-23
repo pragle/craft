@@ -33,6 +33,7 @@ var craftApp = angular.module('craftApp',
     .run(['RemoteCall', function (RemoteCall) {
         console.log("Run");
         RemoteCall.getData();
+        RemoteCall.listConnections();
     }]);
 
 craftApp.factory('AppModel', ['$timeout', function ($timeout) {

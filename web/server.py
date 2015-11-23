@@ -15,7 +15,7 @@ class WebApp:
         self.www = www
         self.db = db_connector.DB(db_path)
         self.html_dependencies()
-        self.cache = cache.Cache()
+        self.cache = cache.Cache(self.db)
 
     def start(self):
         host = self.www['host']

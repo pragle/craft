@@ -46,6 +46,9 @@ craftApp.factory('RemoteDatabase', ['$http', 'AppModel', 'CraftValidator',
                     method: 'GET'
                 }).success(function (data) {
                     CraftValidator.responseValid(data);
+                    console.log(data);
+                    AppModel.databases = data.data;
+                    AppModel.selectedConnection = data.data[0];
                 });
                 console.log('/db/connection/list');
             },

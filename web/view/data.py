@@ -25,7 +25,7 @@ class DataRouter:
             'orm': constraints.ORM,
             'separator': constraints.SEPARATORS
         }
-        return json.dumps({'code': 0, 'msg': '', 'data': data})
+        return json.dumps({'code': 0, 'msg': 'Initial Data get', 'data': data})
 
     def db_test(self):
         data = json.loads(request.data)
@@ -40,7 +40,5 @@ class DataRouter:
         generator = Generator(config)
         out = generator.generate()
         logger.info('code generate : %s' % request.data)
-        return json.dumps({'code': 0, 'msg': '', 'time': constraints.POPUP_TIMEOUT, 'data': out})
-
-    def get_tables(self):
-        return 'siema'
+        m = 'Generate code %s' % str(request.data)
+        return json.dumps({'code': 0, 'msg': m, 'time': constraints.POPUP_TIMEOUT, 'data': out})

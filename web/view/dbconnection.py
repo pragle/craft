@@ -3,6 +3,7 @@
 __author__ = 'Michal Szczepanski'
 
 from craft import constraints
+from web.db import query_connection
 
 from flask import json, request
 
@@ -26,19 +27,21 @@ class DBConnectionRouter:
 
     def add_connection(self):
         data = json.loads(request.data)
-        self.cache.conne
-        return json.dumps({'code': -1, 'msg': 'TODO', 'time': 10000, 'data': None})
+        result = query_connection.AddConnection(data, self.db, self.cache)
+        return json.dumps({'code': result.code, 'msg': result.msg, 'time': result.time, 'data': result.data})
 
     def remove_connection(self):
         data = json.loads(request.data)
-        return json.dumps({'code': -1, 'msg': 'TODO', 'time': 10000, 'data': None})
+        result = query_connection.RemoveConnection(data, self.db, self.cache)
+        return json.dumps({'code': result.code, 'msg': result.msg, 'time': result.time, 'data': result.data})
 
     def test_connection(self):
         data = json.loads(request.data)
         return json.dumps({'code': -1, 'msg': 'TODO', 'time': 10000, 'data': None})
 
     def list_connection(self):
-        return json.dumps({'code': -1, 'msg': 'TODO', 'time': 10000, 'data': None})
+        out = self.cache.connections.list()
+        return json.dumps({'code': 0, 'msg': 'List connections', 'time': 5000, 'data': out})
 
     def query(self):
         data = json.loads(request.data)
