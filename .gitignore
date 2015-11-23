@@ -5,3 +5,5 @@ logs/
 conf_new.json
 conf_old.json
 web/html/static/ext
+model.py
+models.py
