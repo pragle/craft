@@ -1,7 +1,7 @@
 <div>
     <div class="col-md-2">
         <div>
-            <span class="font-1-1">current : </span>
+            <span class="font-1-1">Connected to : </span>
             <span>{{main.data.selectedConnection.connection_name}}</span>
         </div>
         <button class="btn btn-success top-20 width-100p"
@@ -19,6 +19,9 @@
                     <span>
                         {{one.connection_name}}
                     </span>
+                    <span class="close" aria-label="Close">
+                        <span aria-hidden="true" ng-click="db.removeConnection(one)">&times;</span>
+                    </span>
                 </p>
             </div>
         </div>
@@ -31,6 +34,33 @@
             <span>Language : {{main.data.orm.language}}</span>
             <br />
             <span>Framework : {{main.data.ormSelected.name}}</span>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">
+                <span>SQL Query :</span>
+            </span>
+            <input type="text" class="form-control" ng-model="db.query">
+            <span class="input-group-btn">
+                <button class="btn btn-info" ng-click="db.executeQuery()">Execute</button>
+            </span>
+
+        </div>
+        <div>
+            <!-- Display query result as table -->
+            <div ng-if="main.data.queryResult != null">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="one in main.data.queryResult.titles">{{one}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="one in main.data.queryResult.data">
+                            <td ng-repeat="two in one track by $index">{{ ::two }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div>
             <pre ng-if="main.data.code != null">{{main.data.code}}</pre>

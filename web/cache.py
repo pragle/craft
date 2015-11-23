@@ -40,6 +40,8 @@ class Cache:
 class Connections:
     def __init__(self):
         self.data = {}
+        # TODO should store actual connections
+        self.connections = {}
 
     def add(self, name, connection):
         if self.data.has_key(name):
@@ -57,9 +59,15 @@ class Connections:
         logger.info('cache - cannot remove connection %s' % name)
         return False
 
+    def get(self, name):
+        return self.data.get(name, None)
+
     def list(self):
         out = []
         for one in self.data:
             out.append(self.data[one])
         logger.info('cache - list connections')
         return out
+
+    def connect(self, data):
+        pass

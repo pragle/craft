@@ -16,7 +16,7 @@ class AddConnection(QueryBase):
             session.commit()
             cache.connections.add(data['connection_name'], data)
             m = 'Added %s connection' % conn.connection_name
-            self.out_success(conn.connection_name, m, 5000)
+            self.out_success_green(conn.connection_name, m, 5000)
         except Exception, e:
             self.out_error(e.message)
         finally:
@@ -41,12 +41,62 @@ class RemoveConnection(QueryBase):
         QueryBase.__init__(self)
         session = db.session()
         try:
-            session.delete(data['connection_name'])
+            name = data['connection_name']
+            query = session.query(db_model.DatabaseConnection)\
+                .filter(db_model.DatabaseConnection.connection_name == name).first()
+            session.delete(query)
             session.commit()
-            cache.connections.remove(data['connection_name'])
-            m = 'Added %s connection' % data['connection_name']
-            self.out_success(data['connection_name'], m, 5000)
+            cache.connections.remove(name)
+            m = 'Removed %s connection' % name
+            self.out_success_blue(name, m, 5000)
         except Exception, e:
             self.out_error(e.message)
         finally:
             session.close()
+
+
+class QueryConnection(QueryBase):
+
+    def __init__(self, data, cache):
+        QueryBase.__init__(self)
+        try:
+            name = data['connection_name']
+            query = data['query']
+            conn = cache.connections.get(name)
+            # TODO simplify move parts to cache
+            from craft import model
+            from craft.db.connector import DBConnector
+            config = model.DBConfig(conn)
+            db = DBConnector(config)
+            result = db.execute(query)
+            m = 'Query %s : %s' % (name, query)
+            out = {
+                'titles':result._metadata.keys,
+                'data':[],
+            }
+            for one in result:
+                out['data'].append(one._row)
+            self.out_success_green(out, m, 5000)
+        except Exception, e:
+            self.out_error(e.message)
+
+
+class DatabaseStructure(QueryBase):
+
+    def __init__(self, data, cache):
+        QueryBase.__init__(self)
+        try:
+            name = data['connection_name']
+            conn = cache.connections.get(name)
+            # TODO simplify move parts to cache
+            from craft.db.parser import DBParser
+            from craft import model
+            from craft.db.connector import DBConnector
+            config = model.DBConfig(conn)
+            db = DBConnector(config)
+            parser = DBParser()
+            structure = parser.parsetables(db.get_metadata(), db.dbversion)
+            m = 'DatabaseStructure : %s' % name
+            self.out_success_green(structure, m, 5000)
+        except Exception, e:
+            self.out_error(e.message)

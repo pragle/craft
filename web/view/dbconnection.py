@@ -23,7 +23,7 @@ class DBConnectionRouter:
         self.app.add_url_rule(prefix+'/connection/list', 'db_connection_list', self.list_connection, methods=['GET'])
         self.app.add_url_rule(prefix+'/connection/test', 'db_connection_test', self.test_connection, methods=['POST'])
         self.app.add_url_rule(prefix+'/query', 'db_query', self.query, methods=['POST'])
-        self.app.add_url_rule(prefix+'/structure', 'db_structure', self.db_structure, methods=['GET'])
+        self.app.add_url_rule(prefix+'/structure', 'db_structure', self.db_structure, methods=['POST'])
 
     def add_connection(self):
         data = json.loads(request.data)
@@ -45,8 +45,10 @@ class DBConnectionRouter:
 
     def query(self):
         data = json.loads(request.data)
-        return json.dumps({'code': -1, 'msg': 'TODO', 'time': 10000, 'data': None})
+        result = query_connection.QueryConnection(data, self.cache)
+        return json.dumps({'code': result.code, 'msg': result.msg, 'time': result.time, 'data': result.data})
 
     def db_structure(self):
         data = json.loads(request.data)
-        return json.dumps({'code': -1, 'msg': 'TODO', 'time': constraints.POPUP_TIMEOUT, 'data': None})
+        result = query_connection.DatabaseStructure(data, self.cache)
+        return json.dumps({'code': result.code, 'msg': result.msg, 'time': result.time, 'data': result.data})
