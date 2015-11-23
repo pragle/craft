@@ -8,13 +8,8 @@ import logging
 from craft import constraints, model_factory, model
 from craft.db.connector import DBConnector
 from craft.generator import Generator
-from web import model as web_model
-
-from sqlalchemy.ext.declarative import declarative_base
 
 from flask import json, request
-
-Base = declarative_base()
 
 logger = logging.getLogger()
 
