@@ -1,3 +1,7 @@
+# from global
+*~
+.DS_Store
+# repo
 *.pyc
 *.iml
 *.db
@@ -5,5 +9,6 @@ logs/
 conf_new.json
 conf_old.json
 web/html/static/ext
+# generated files
 model.py
 models.py
