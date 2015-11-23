@@ -35,6 +35,7 @@
 
             popup.addConnection = function() {
                 var db = angular.copy(AppModel.db);
+                RemoteCall.addConnection(db);
                 AppModel.selectedConnection = db;
                 AppModel.databases.push(db);
                 console.log('add connection');

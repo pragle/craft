@@ -16,8 +16,8 @@
             var db = this;
 
             db.addConnection = function() {
-                AppModel.currentPopup = '/static/html/popups/db_add.html';
-                $('#dbAddPopup').modal('show');
+                AppModel.currentPopup = '/static/html/popups/connection_add.html';
+                $('#connectionAddPopup').modal('show');
             }
 
             db.generateCode = function() {

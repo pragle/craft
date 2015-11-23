@@ -24,14 +24,13 @@ class DBConnectionRouter:
         data = json.loads(request.data)
         return 'TODO'
 
-    def execute_query(self):
+    def list_connection(self):
+        return 'TODO'
+
+    def query(self):
         data = json.loads(request.data)
         return 'TODO'
 
-    def get_last_queries(self):
-        data = json.loads(request.data)
-        return 'TODO'
-
-    def get_db_structure(self):
+    def db_structure(self):
         data = json.loads(request.data)
         return 'TODO'
