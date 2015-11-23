@@ -6,5 +6,23 @@ Craft
 
 <h5>What it's all about ? </h5>
 <p>nothing much more now then :</p>
-1. connect to database ( sqlite / postgresql )
-2. generate django / sqlalchemy / hibernate orm code from your database structure
+
+<p>Connect to multiple databases.</p>
+<pre>
+  - database data stored in sqlite named craft.db 
+  - add /remove database from store
+  - supported ( sqlite / postgresql )
+</pre>
+<p>Execute queries and see results.</p>
+<pre>
+  - see results in table
+</pre>
+<p>Generate orm code.</p>
+<p>1. Python</p>
+<pre>  
+   django, sqlalchemy
+</pre>
+<p> 2. Java</p>
+<pre>
+   hibernate
+</pre>
