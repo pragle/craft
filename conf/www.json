@@ -10,6 +10,9 @@
       "file":"conf/html.json"
     }
   },
+  "logging":{
+    "directory":"logs"
+  },
   "database":{
     "path":"sqlite:///craft.db"
   }
