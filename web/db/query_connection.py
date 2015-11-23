@@ -97,6 +97,9 @@ class DatabaseStructure(QueryBase):
             parser = DBParser()
             structure = parser.parsetables(db.get_metadata(), db.dbversion)
             m = 'DatabaseStructure : %s' % name
-            self.out_success_green(structure, m, 5000)
+            self.out_success_green(self.serialize(structure), m, 5000)
         except Exception, e:
             self.out_error(e.message)
+
+    def serialize(self, structure):
+        return {}

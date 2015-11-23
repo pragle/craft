@@ -15,28 +15,12 @@
         .controller('TestCtrl', ['$scope', 'AppModel', 'RemoteCall', function ($scope, AppModel, RemoteCall) {
             var test = this;
 
-            test.addConnection = function() {
-                RemoteCall.addConnection(AppModel.db);
-            }
-
-            test.removeConnection = function() {
-                RemoteCall.removeConnection(null);
-            }
-
-            test.listConnections = function() {
-                RemoteCall.listConnections();
-            }
-
             test.testConnection = function() {
                 RemoteCall.testConnection();
             }
 
-            test.query = function() {
-                RemoteCall.query("SELECT * FROM task");
-            }
-
             test.dbStructure = function() {
-                RemoteCall.dbStructure(null);
+                RemoteCall.dbStructure(AppModel.selectedConnection);
             }
         }]);
 })();

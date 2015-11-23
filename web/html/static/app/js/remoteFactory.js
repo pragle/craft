@@ -69,15 +69,19 @@ craftApp.factory('RemoteDatabase', ['$http', 'AppModel', 'CraftValidator',
                     data: data
                 }).success(function (data) {
                     CraftValidator.responseValid(data);
+                    console.log(data);
+                    AppModel.queryResult = data.data;
                 });
                 console.log('/db/query');
             },
             dbStructure: function (db) {
                 $http({
-                    url: '/db/structure/'+db.name,
-                    method: 'GET'
+                    url: '/db/structure',
+                    method: 'POST',
+                    data: db
                 }).success(function (data) {
                     CraftValidator.responseValid(data);
+                    console.log(data);
                 });
                 console.log('/db/structure');
             }
