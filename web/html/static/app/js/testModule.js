@@ -18,9 +18,5 @@
             test.testConnection = function() {
                 RemoteCall.testConnection();
             }
-
-            test.dbStructure = function() {
-                RemoteCall.dbStructure(AppModel.selectedConnection);
-            }
         }]);
 })();

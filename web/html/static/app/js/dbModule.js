@@ -17,6 +17,8 @@
 
             db.query = 'SELECT * FROM task';
 
+            db.selected = 0;
+
             db.addConnection = function() {
                 AppModel.currentPopup = '/static/html/popups/connection_add.html';
                 $('#connectionAddPopup').modal('show');
@@ -39,6 +41,10 @@
                     'query': db.query,
                 }
                 RemoteCall.query(data);
+            }
+
+            db.dbStructure = function() {
+                RemoteCall.dbStructure(AppModel.selectedConnection);
             }
         }]);
 })();

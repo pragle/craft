@@ -25,46 +25,70 @@
                 </p>
             </div>
         </div>
-        <button class="btn btn-success width-100p"
-                ng-click="db.generateCode()"
-                ng-disabled="main.data.selectedConnection == null">Generate</button>
     </div>
     <div class="col-md-10">
-        <div>
-            <span>Language : {{main.data.orm.language}}</span>
-            <br />
-            <span>Framework : {{main.data.ormSelected.name}}</span>
+        <div class="btn-group top-20" role="group" data-toggle="buttons">
+            <button class="btn btn-default" ng-click="db.selected = 0"
+                    ng-class="{'active': db.selected == 0}">SQL query</button>
+            <button class="btn btn-default" ng-click="db.selected = 1"
+                    ng-class="{'active': db.selected == 1}">ORM code</button>
+            <button class="btn btn-default" ng-click="db.selected = 2; db.dbStructure();"
+                    ng-class="{'active': db.selected == 2}">DB structure</button>
         </div>
-        <div class="input-group">
+        <div class="top-20" ng-if="db.selected == 0">
+            <div class="input-group">
             <span class="input-group-addon">
                 <span>SQL Query :</span>
             </span>
-            <input type="text" class="form-control" ng-model="db.query">
+                <input type="text" class="form-control" ng-model="db.query">
             <span class="input-group-btn">
                 <button class="btn btn-info" ng-click="db.executeQuery()">Execute</button>
             </span>
-
-        </div>
-        <div>
-            <!-- Display query result as table -->
-            <div ng-if="main.data.queryResult != null">
-                <br />
-                <table class="table table-bordered table-striped">
-                    <thead>
+            </div>
+            <div>
+                <!-- Display query result as table -->
+                <div ng-if="main.data.queryResult != null">
+                    <br />
+                    <table class="table table-bordered table-striped">
+                        <thead>
                         <tr>
                             <th ng-repeat="one in main.data.queryResult.titles track by $index">{{one}}</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr ng-repeat="one in main.data.queryResult.data">
                             <td ng-repeat="two in one track by $index">{{ ::two }}</td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <div>
-            <pre ng-if="main.data.code != null">{{main.data.code}}</pre>
+
+        <div ng-if="db.selected == 1">
+            <div class="top-20">
+                <div>
+                    <span>Language : {{main.data.orm.language}}</span>
+                    <br />
+                    <span>Framework : {{main.data.ormSelected.name}}</span>
+                </div>
+                <button class="btn btn-success width-100p"
+                        ng-click="db.generateCode()"
+                        ng-disabled="main.data.selectedConnection == null">Generate</button>
+            </div>
+            <div class="top-20">
+                <pre ng-if="main.data.code != null">{{main.data.code}}</pre>
+            </div>
+        </div>
+        <div ng-if="db.selected == 2">
+            <div ng-repeat="one in main.data.dbStructure.tables">
+                <h3 class="top-20">Table : {{ one.name }}</h3>
+                <div ng-repeat="two in one.columns" style="width: 300px;">
+                    <span style="float: left;">{{ two.type }}</span>
+                    <span style="float: right;">{{ two.name }}</span>
+                    <br />
+                </div>
+            </div>
         </div>
     </div>
 </div>

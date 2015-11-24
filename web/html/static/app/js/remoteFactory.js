@@ -7,7 +7,7 @@
 craftApp.factory('CraftValidator', ['AppModel', function(AppModel){
     var CraftValidator = {
         responseValid: function (data) {
-            var result = data.code == 0 ? true : false;
+            var result = data.code < 200 ? true : false;
             if(data.msg != '') {
                 AppModel.flash.add({'type':~~(data.code/100), 'message':data.msg, 'time':data.time});
             }
@@ -45,10 +45,11 @@ craftApp.factory('RemoteDatabase', ['$http', 'AppModel', 'CraftValidator',
                     url: '/db/connection/list',
                     method: 'GET'
                 }).success(function (data) {
-                    CraftValidator.responseValid(data);
+                    if(CraftValidator.responseValid(data)) {
+                        AppModel.databases = data.data;
+                        AppModel.selectedConnection = data.data[0];
+                    }
                     console.log(data);
-                    AppModel.databases = data.data;
-                    AppModel.selectedConnection = data.data[0];
                 });
                 console.log('/db/connection/list');
             },
@@ -68,9 +69,10 @@ craftApp.factory('RemoteDatabase', ['$http', 'AppModel', 'CraftValidator',
                     method: 'POST',
                     data: data
                 }).success(function (data) {
-                    CraftValidator.responseValid(data);
+                    if(CraftValidator.responseValid(data)) {
+                        AppModel.queryResult = data.data;
+                    }
                     console.log(data);
-                    AppModel.queryResult = data.data;
                 });
                 console.log('/db/query');
             },
@@ -80,7 +82,9 @@ craftApp.factory('RemoteDatabase', ['$http', 'AppModel', 'CraftValidator',
                     method: 'POST',
                     data: db
                 }).success(function (data) {
-                    CraftValidator.responseValid(data);
+                    if(CraftValidator.responseValid(data)) {
+                        AppModel.dbStructure = data.data;
+                    }
                     console.log(data);
                 });
                 console.log('/db/structure');
