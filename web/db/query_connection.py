@@ -102,4 +102,24 @@ class DatabaseStructure(QueryBase):
             self.out_error(e.message)
 
     def serialize(self, structure):
-        return {}
+        out = {
+            'deps': structure.deps,
+            'tables': None,
+        }
+        tables = []
+        for one in structure.tables:
+            columns = []
+            for two in one.columns:
+                column = {
+                    'name': two.name,
+                    'primary': two.primary,
+                    'type': two.type.name
+                }
+                columns.append(column)
+            table = {
+                'name': one.name,
+                'columns': columns
+            }
+            tables.append(table)
+        out['tables'] = tables
+        return out
