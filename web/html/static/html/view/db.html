@@ -52,7 +52,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th ng-repeat="one in main.data.queryResult.titles">{{one}}</th>
+                            <th ng-repeat="one in main.data.queryResult.titles track by $index">{{one}}</th>
                         </tr>
                     </thead>
                     <tbody>
