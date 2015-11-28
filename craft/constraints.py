@@ -86,6 +86,16 @@ ORM = [
         ],
         'tabulation': '\\t'
     },
+    {
+        'language': 'javascript',
+        'orm': [
+            {
+                'name': 'bookshelfjs',
+                'file': 'model.js'
+            }
+        ],
+        'tabulation': '\\t'
+    },
 ]
 
 SEPARATORS = [

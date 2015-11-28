@@ -10,7 +10,9 @@ from craft.db.connector import DBConnector
 from craft.gen.sqldb.sqlalchemy import SQLAlchemyGenerator
 from craft.gen.sqldb.hibernate import HibernateGenerator
 from craft.gen.sqldb.django import DjangoGenerator
+from craft.gen.sqldb.bookshelfjs import BookshelfJS
 from craft.gen.sqldb.base import GeneratorOutput
+from craft.gen.sqldb.base import BaseGenerator
 
 logger = logging.getLogger()
 
@@ -32,8 +34,10 @@ class Generator:
             self.orm = DjangoGenerator(config, self.structure)
         elif name == 'hibernate':
             self.orm = HibernateGenerator(config, self.structure)
+        elif name == 'bookshelfjs':
+            self.orm = BookshelfJS(config, self.structure)
         else:
-            self.orm = Generator(config, self.structure)
+            self.orm = BaseGenerator(config, self.structure)
 
     def generate(self):
         output = GeneratorOutput()
