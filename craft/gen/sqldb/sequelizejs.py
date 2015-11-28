@@ -22,13 +22,14 @@ class SequelizeJS(base.BaseGenerator):
 
     def header(self):
         SEP = self.config.separator
-        out = """var Sequelize = require('sequelize');"""+SEP
-        out += """var sequelize = new Sequelize('database', 'username', 'password');"""
-        out += '/*'+SEP
+        out = '/*'+SEP
         out += ' * THIS CODE WAS GENERATED AUTOMATICALY'+SEP
         out += ' * MODIFICATIONS AT YOUR OWN RISK !!!'+SEP
-        out += ' * @author = \'craft generator\''+SEP
+        out += ' * @author \'craft generator\''+SEP
         out += ' */'+SEP
+        out += SEP
+        out += """var Sequelize = require('sequelize');"""+SEP
+        out += """var sequelize = new Sequelize('database', 'username', 'password');"""
         out += SEP
         return out
 

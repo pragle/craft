@@ -26,7 +26,7 @@ class BookshelfJS(base.BaseGenerator):
         out += '/*'+SEP
         out += ' * THIS CODE WAS GENERATED AUTOMATICALY'+SEP
         out += ' * MODIFICATIONS AT YOUR OWN RISK !!!'+SEP
-        out += ' * @author = \'craft generator\''+SEP
+        out += ' * @author \'craft generator\''+SEP
         out += ' */'+SEP
         out += SEP
         return out
