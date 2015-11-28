@@ -92,7 +92,12 @@ ORM = [
             {
                 'name': 'bookshelfjs',
                 'file': 'model.js'
+            },
+            {
+                'name': 'sequelizejs',
+                'file': 'model.js'
             }
+
         ],
         'tabulation': '\\t'
     },

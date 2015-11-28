@@ -11,6 +11,7 @@ from craft.gen.sqldb.sqlalchemy import SQLAlchemyGenerator
 from craft.gen.sqldb.hibernate import HibernateGenerator
 from craft.gen.sqldb.django import DjangoGenerator
 from craft.gen.sqldb.bookshelfjs import BookshelfJS
+from craft.gen.sqldb.sequelizejs import SequelizeJS
 from craft.gen.sqldb.base import GeneratorOutput
 from craft.gen.sqldb.base import BaseGenerator
 
@@ -36,6 +37,8 @@ class Generator:
             self.orm = HibernateGenerator(config, self.structure)
         elif name == 'bookshelfjs':
             self.orm = BookshelfJS(config, self.structure)
+        elif name == 'sequelizejs':
+            self.orm = SequelizeJS(config, self.structure)
         else:
             self.orm = BaseGenerator(config, self.structure)
 
